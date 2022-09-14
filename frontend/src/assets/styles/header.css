@@ -1,0 +1,9 @@
+header {
+    background: var(--clr-primary);
+    background-image: linear-gradient(to right, var(--clr-primary), var(--clr-secondary) 130%);
+    padding-block: 1em;
+}
+
+.navbar-list {
+    list-style: none;
+}

@@ -1,13 +1,102 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,400;1,500&display=swap');
+
+:root {
+    --clr-accent: #967E76;
+    --clr-accent-constant: var(--clr-accent);
+  
+    --clr-light: white;
+    --clr-dark: #121212;
+    --clr-primary: #704F4F ;
+    --clr-secondary: #967E76;
+    --clr-tertiary: #D7C0AE;
+    --clr-quaternary: #EEE3CB;
+    --clr-quinary: #B7C4CF;
+  
+    --foreground: var(--clr-dark);
+    --background: var(--clr-light);
+  
+    --font-text: 'Roboto', sans-serif;
+    --font-title: 'Bebas Neue', cursive;
+    --theme-icon: '☀';
+  
+    --inverted: none;
+  
+    --inverted-constant: invert(1) hue-rotate(180deg);
+  
+    --link-clr: #0000ee;
+    --visited-clr: #551a8b;
+
+  }
+  
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body,
+h1,
+h2,
+h3,
+ul,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-title);
+}
+img {
+    max-width: 100%;
+}
+
+a {
+    color: var(--link-clr);
+}
+
+main {
+    padding-block: 3rem;
+    background-color: var(--clr-quaternary);
+}
+
+.container {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+@media (min-width:700px) {
+    .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+    }
+
+    .col {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 1em;
+    }
+}
+
+@media (min-width: 1000px) {
+    .row-large {
+        display: flex;
+        justify-content: space-between;
+        gap: 2em;
+    }
+
+    .col-large {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2em;
+    }
 }
