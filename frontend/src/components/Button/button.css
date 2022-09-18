@@ -1,0 +1,12 @@
+.default-btn {
+    padding: 1rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: var(--clr-quinary);
+    font-size: 1rem;
+
+}
+
+.default-btn:hover{
+
+}
