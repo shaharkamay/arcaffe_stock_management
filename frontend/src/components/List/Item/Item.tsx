@@ -1,26 +1,21 @@
 import React from 'react';
 import Button from '../../Button/Button';
+import {ItemI} from '../../../@types';
 
-const Item = ({item, onItemClick, selectedItems, stockList, setStockList}: {item:  {[key]: number}, onItemClick: () => void, selectedItems: [{[key]: number}]}): JSX.Element => {
-    const itemName = Object.keys(item)[0];
-    const itemCount = item[itemName];
-
+const Item = ({item, onItemClick, selectedItems, stockList, setStockList}: {item:  ItemI, onItemClick: () => void, selectedItems: ItemI[]}): JSX.Element => {
     const alterItemCount = (amount) => {
         const updatedStockList = stockList.map((i) => {
-            const itemObj = (Object.keys(i)[0] === Object.keys(item)[0]) ? item : -1;
-            console.log(itemObj);
-            if(!(itemObj === -1)) {
-                itemObj[Object.keys(itemObj)[0]] = itemObj[Object.keys(itemObj)[0]] + amount;
-            } else return i;
-            return itemObj;
-        
+            if (i.name === item.name) {
+                return {...item, count: item.count + amount};
+            }
+            return i;
         });
         setStockList(updatedStockList);
         localStorage.setItem('stockList', JSON.stringify(updatedStockList));
     };
 
     return (
-        <div className='list-item' style={{border: (selectedItems.filter(i => Object.keys(i)[0] === Object.keys(item)[0]).length > 0) ? '2px solid black' : '2px solid blue'}} onClick={(e) => onItemClick(e, item)}>
+        <div className='list-item' style={{border: (selectedItems.filter(i => i.name === item.name).length > 0) ? '2px solid blue' : '2px solid black'}} onClick={(e) => onItemClick(e, item)}>
             <Button onClick={(e) => {
                 e.stopPropagation();
                 alterItemCount(-5);
@@ -30,8 +25,8 @@ const Item = ({item, onItemClick, selectedItems, stockList, setStockList}: {item
                 alterItemCount(-1);
             }}>-</Button>
             <div>
-                <span>{itemName} </span>
-                <span>{itemCount}</span>
+                <span>{item.name} </span>
+                <span>{item.count}</span>
             </div>
             <Button onClick={(e) => {
                 e.stopPropagation();

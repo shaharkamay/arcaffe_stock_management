@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import Button from '../Button/Button';
-const AddItem = (): JSX.Element => {
+import {ItemI} from '../../@types';
+
+const AddItem = ({stockList, setStockList}): JSX.Element => {
     const [itemName, setItemName] = useState("");
     
     const addItemToList = (e) => {
-        const stockList = (localStorage.getItem("stockList") ? JSON.parse(localStorage.getItem("stockList")) as [{[key]: number}] : [{}]) as [{[key]: number}];
-        const obj = {};
-        obj[itemName] = 1;
-        stockList.push(obj);
+        const newItem = {
+            name: itemName,
+            count: 1
+        };
+        setStockList(stockList => [...stockList, newItem]);
         localStorage.setItem('stockList', JSON.stringify(stockList));
     };
 
