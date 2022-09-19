@@ -6,10 +6,6 @@ const isTouchEvent = (event: React.TouchEvent<HTMLElement>) => {
 
 const preventDefault = (e: React.TouchEvent<HTMLElement>) => {
     if (!isTouchEvent(e)) return;
-    
-    if (e.touches.length < 2 && e.preventDefault) {
-        e.preventDefault();
-    }
 };
 
 const useLongPress = (
