@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Item = ({ children }: {children: React.ReactNode}): JSX.Element => {
     return (
@@ -6,6 +6,6 @@ const Item = ({ children }: {children: React.ReactNode}): JSX.Element => {
             {children}
         </li>
     );
-}
+};
 
 export default Item;

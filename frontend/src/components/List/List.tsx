@@ -4,12 +4,13 @@ import {ItemI} from '../../@types';
 import AddItem from './AddItem';
 import './list.css';
 
-
+const localStockList: string = localStorage.getItem("stockList") || '';
+const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
 const List = () => {
-    const [stockList, setStockList] = useState((localStorage.getItem("stockList") ? JSON.parse(localStorage.getItem("stockList")) as ItemI[] : [{}]) as ItemI[]);
+    const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
     
-    const [selectedItems, setSelectedItems] = useState([]);
-    const onItemClick = (e, item) => {
+    const [selectedItems, setSelectedItems] = useState<ItemI[]>([]);
+    const onItemClick = (e: React.MouseEvent<HTMLElement>, item: ItemI) => {
         if (selectedItems.find((i) => i.name === item.name)) {
             setSelectedItems(selectedItems.filter(i => i.name !== item.name));
             return;

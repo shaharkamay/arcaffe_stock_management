@@ -2,9 +2,21 @@ import React from 'react';
 import Button from '../../Button/Button';
 import {ItemI} from '../../../@types';
 
-const Item = ({item, onItemClick, selectedItems, stockList, setStockList}: {item:  ItemI, onItemClick: () => void, selectedItems: ItemI[]}): JSX.Element => {
-    const alterItemCount = (amount) => {
-        const updatedStockList = stockList.map((i) => {
+const Item = ({
+    item, 
+    onItemClick, 
+    selectedItems, 
+    stockList, 
+    setStockList
+}: {
+    item:  ItemI, 
+    onItemClick: (e: React.MouseEvent<HTMLElement>, item: ItemI) => void, 
+    selectedItems: ItemI[], 
+    stockList: ItemI[], 
+    setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>
+}): JSX.Element => {
+    const alterItemCount = (amount: number) => {
+        const updatedStockList: ItemI[] = stockList.map((i) => {
             if (i.name === item.name) {
                 return {...item, count: item.count + amount};
             }
