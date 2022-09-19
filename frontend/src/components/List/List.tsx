@@ -38,7 +38,7 @@ const List = () => {
     return (
         <div className='col list'>
             {
-                stockList.map((item, i) => (<Item key={i} stockList={stockList} setStockList={setStockList} item={item} onItemClick={onItemClick} selectedItems={selectedItems} />))
+                stockList.map((item, i) => (<Item key={i} stockList={stockList} setStockList={setStockList} item={item} onItemClick={onItemClick} selectedItems={selectedItems} setSelectedItems={setSelectedItems}/>))
             }
             {selectedItems.length <= 0 && <AddItem stockList={stockList} setStockList={setStockList} />}
             {selectedItems.length > 0 && <Button onClick={() => removeSelectedItem()}>Remove</Button>}
