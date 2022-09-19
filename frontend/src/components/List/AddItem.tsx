@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Button from '../Button/Button';
 import {ItemI} from '../../@types';
 
-const AddItem = ({stockList, setStockList}: {stockList: ItemI[], setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>}): JSX.Element => {
+const AddItem = ({setStockList}: {setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>}): JSX.Element => {
     const [itemName, setItemName] = useState<string>("");
     
     const addItemToList = () => {
@@ -10,8 +10,11 @@ const AddItem = ({stockList, setStockList}: {stockList: ItemI[], setStockList: R
             name: itemName,
             count: 1
         };
-        setStockList((prevStockList: ItemI[]) => [...prevStockList, newItem]);
-        localStorage.setItem('stockList', JSON.stringify(stockList));
+        setStockList((prevStockList: ItemI[]) => {
+            const updatedStockList = [...prevStockList, newItem];
+            localStorage.setItem('stockList', JSON.stringify(updatedStockList));
+            return updatedStockList;
+        });
     };
 
     return (

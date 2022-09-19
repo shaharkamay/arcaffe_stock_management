@@ -23,7 +23,7 @@ const List = () => {
             {
                 stockList.map((item, i) => (<Item key={i} stockList={stockList} setStockList={setStockList} item={item} onItemClick={onItemClick} selectedItems={selectedItems} />))
             }
-            <AddItem stockList={stockList} setStockList={setStockList} />
+            <AddItem setStockList={setStockList} />
             
         </div>
     );
