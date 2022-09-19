@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import Button from '../Button/Button';
 import {ItemI} from '../../@types';
 
-const AddItem = ({setStockList}: {setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>}): JSX.Element => {
+const AddItem = ({stockList, setStockList}: {stockList: ItemI[], setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>}): JSX.Element => {
     const [itemName, setItemName] = useState<string>("");
     
     const addItemToList = () => {
+        if (!itemName) return;
+        if(stockList.find(i => i.name === itemName)) return;
+
         const newItem: ItemI = {
             name: itemName,
             count: 1
@@ -15,6 +18,7 @@ const AddItem = ({setStockList}: {setStockList: React.Dispatch<React.SetStateAct
             localStorage.setItem('stockList', JSON.stringify(updatedStockList));
             return updatedStockList;
         });
+        setItemName('');
     };
 
     return (

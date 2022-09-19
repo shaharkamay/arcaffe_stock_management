@@ -18,24 +18,25 @@ const Item = ({
 }): JSX.Element => {
     const onLongPress = (e: React.TouchEvent<HTMLElement>) => {
         onItemClick(e, item);
-      };
+    };
     
-      const onClick = (e: React.TouchEvent<HTMLElement>) => {
-          if (selectedItems.length > 0) {
+    const onClick = (e: React.TouchEvent<HTMLElement>) => {
+        if (selectedItems.length > 0) {
             onItemClick(e, item);
-          }
-      };
-    
-      const defaultOptions = {
-          shouldPreventDefault: true,
-          delay: 500,
-      };
-      const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions) as unknown as React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+        }
+    };
+
+    const defaultOptions = {
+        shouldPreventDefault: true,
+        delay: 500,
+    };
+    const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions) as unknown as React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
     
     const alterItemCount = (amount: number) => {
         const updatedStockList: ItemI[] = stockList.map((i) => {
             if (i.name === item.name) {
-                return {...item, count: item.count + amount};
+                const newTotal = ((item.count + amount) < 0) ? 0 : (item.count + amount);
+                return {...item, count: newTotal};
             }
             return i;
         });
