@@ -4,7 +4,7 @@ import {ItemI} from '../../@types';
 import AddItem from './AddItem';
 import './list.css';
 
-const localStockList: string = localStorage.getItem("stockList") || '';
+const localStockList: string = localStorage.getItem("stockList") || '[]';
 const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
 const List = () => {
     const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
