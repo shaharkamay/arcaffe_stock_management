@@ -10,7 +10,7 @@ const List = () => {
     const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
     
     const [selectedItems, setSelectedItems] = useState<ItemI[]>([]);
-    const onItemClick = (e: React.MouseEvent<HTMLElement>, item: ItemI) => {
+    const onItemClick = (e: React.TouchEvent<HTMLElement>, item: ItemI) => {
         if (selectedItems.find((i) => i.name === item.name)) {
             setSelectedItems(selectedItems.filter(i => i.name !== item.name));
             return;
