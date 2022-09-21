@@ -1,9 +1,9 @@
 import React from 'react';
 import './button.css';
 
-const Button = (props: {children: React.ReactNode, onClick: React.MouseEventHandler<HTMLElement>}): JSX.Element => {
+const Button = (props: {children: React.ReactNode, onClick: React.MouseEventHandler<HTMLElement>, className?: string}): JSX.Element => {
     return (
-        <button className='default-btn' onClick={props.onClick}>{props.children}</button>
+        <button className='default-btn' {...props} >{props.children}</button>
     );
 };
 

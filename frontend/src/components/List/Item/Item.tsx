@@ -47,7 +47,7 @@ const Item = ({
     };
 
     const defaultOptions = {
-        shouldPreventDefault: false,
+        shouldPreventDefault: true,
         delay: 500,
     };
     const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions) as unknown as React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
@@ -74,7 +74,10 @@ const Item = ({
         } else {
             updatedSelectedItems = [...selectedItems];
             for (let j = 0; j < updatedSelectedItems.length; j++) {
-                updatedSelectedItems[j].count += amount;
+                if (updatedSelectedItems[j].count + amount < 0)
+                    updatedSelectedItems[j].count = 0;
+                else
+                    updatedSelectedItems[j].count += amount;
             }
             setSelectedItems(updatedSelectedItems);
             updatedStockList = [...stockList];
@@ -110,7 +113,7 @@ const Item = ({
     }
 
     return (
-        <div className='list-item' style={{border: (selectedItems.filter(i => i.name === item.name).length > 0) ? '2px solid blue' : '2px solid black'}} {...longPressEvent}>
+        <div className={`list-item ${(selectedItems.filter(i => i.name === item.name).length > 0) ? 'list-item-selected' : ''}`}  {...longPressEvent}>
             <Button onClick={(e) => {
                 e.stopPropagation();
                 alterItemCount(-5);
@@ -119,9 +122,9 @@ const Item = ({
                 e.stopPropagation();
                 alterItemCount(-1);
             }}>-</Button>
-            <div>
-                <span>{item.name} </span>
-                <span><input className="count-input" type='text' onBlur={setItemCount} disabled={Boolean(selectedItems.length)} placeholder={item.count.toString()} ref={inputRef} /></span>
+            <div className='list-item-content'>
+                <span className='list-item-name'>{item.name} </span>
+                <span><input className='list-item-count' type='text' onBlur={setItemCount} disabled={Boolean(selectedItems.length)} placeholder={item.count.toString()} ref={inputRef} /></span>
             </div>
             <Button onClick={(e) => {
                 e.stopPropagation();

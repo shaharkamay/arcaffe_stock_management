@@ -3,31 +3,32 @@
 :root {
     --clr-accent: #967E76;
     --clr-accent-constant: var(--clr-accent);
-  
+
     --clr-light: white;
     --clr-dark: #121212;
-    --clr-primary: #704F4F ;
+    --clr-primary: #704F4F;
     --clr-secondary: #967E76;
     --clr-tertiary: #D7C0AE;
     --clr-quaternary: #EEE3CB;
     --clr-quinary: #B7C4CF;
-  
+    --clr-quinary-alternate: #a4b0ba;
+
     --foreground: var(--clr-dark);
     --background: var(--clr-light);
-  
+
     --font-text: 'Roboto', sans-serif;
     --font-title: 'Bebas Neue', cursive;
     --theme-icon: '☀';
-  
+
     --inverted: none;
-  
+
     --inverted-constant: invert(1) hue-rotate(180deg);
-  
+
     --link-clr: #0000ee;
     --visited-clr: #551a8b;
 
-  }
-  
+}
+
 
 *,
 *::before,
@@ -49,9 +50,15 @@ body {
     font-family: var(--font-text);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-title);
 }
+
 img {
     max-width: 100%;
 }
@@ -62,7 +69,7 @@ a {
 
 main {
     padding-block: 3rem;
-    background-color: var(--clr-quaternary);
+    background-color: var(white);
 }
 
 .container {
