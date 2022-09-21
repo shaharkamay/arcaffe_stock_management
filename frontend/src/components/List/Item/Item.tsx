@@ -30,6 +30,7 @@ const Item = ({
         if ((e.target as HTMLTextAreaElement).tagName === 'INPUT') {
             return;
         }
+        console.log('jizz');
 
         for (let j = 0; j < selectedItems.length; j++) {
             const selectedName = selectedItems[j].name;
@@ -46,7 +47,7 @@ const Item = ({
     };
 
     const defaultOptions = {
-        shouldPreventDefault: true,
+        shouldPreventDefault: false,
         delay: 500,
     };
     const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions) as unknown as React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;

@@ -25,7 +25,7 @@ const useLongPress = (
 
     const start = useCallback(
         (event: React.TouchEvent<HTMLElement>) => {
-            if (shouldPreventDefault && event.target) {
+            if (shouldPreventDefault && event.target && (!((event.target as HTMLTextAreaElement).tagName === 'INPUT'))) {
                 event.target.addEventListener("touchend", preventDefault as unknown as (EventListenerOrEventListenerObject | null), { 
                     passive: false
                 });

@@ -7,7 +7,7 @@ import Logo from '../../assets/images/coffee-cup.svg';
 
 const Header = (): JSX.Element => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const isTablet = useMediaQuery({ query: `(min-width: 700px)` });
+  const isTablet: boolean = useMediaQuery({ query: `(min-width: 700px)` });
   const handleNavToggle = () => {
     setIsMobileNavOpen(!isMobileNavOpen);
   };
