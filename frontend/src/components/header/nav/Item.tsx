@@ -2,9 +2,11 @@ import React from 'react';
 
 const Item = ({ children }: {children: React.ReactNode}): JSX.Element => {
     return (
-        <li>
-            {children}
-        </li>
+      <li>
+        <a className="navbar-link" href="#">
+          {children}
+        </a>
+      </li>
     );
 };
 
