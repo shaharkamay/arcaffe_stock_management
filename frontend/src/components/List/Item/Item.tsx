@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Button from '../../Button/Button';
 import {ItemI} from '../../../@types';
 import useLongPress from '../../../hooks/useLongPress';
@@ -18,12 +18,19 @@ const Item = ({
     stockList: ItemI[], 
     setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>
 }): JSX.Element => {
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
     const onLongPress = (e: React.TouchEvent<HTMLElement>) => {
         onItemClick(e, item);
     };
     
     const onClick = (e: React.TouchEvent<HTMLElement>) => {
         let doesExistInSelectedItems = false;
+        if ((e.target as HTMLTextAreaElement).tagName === 'INPUT') {
+            return;
+        }
+
         for (let j = 0; j < selectedItems.length; j++) {
             const selectedName = selectedItems[j].name;
             if (selectedName !== item.name) {
@@ -58,6 +65,7 @@ const Item = ({
             updatedStockList = stockList.map((i) => {
                 if (i.name === item.name) {
                     const newTotal = ((item.count + amount) < 0) ? 0 : (item.count + amount);
+
                     return {...item, count: newTotal};
                 }
                 return i;
@@ -77,9 +85,28 @@ const Item = ({
                 }
             }
         }
-        setStockList(updatedStockList);
         localStorage.setItem('stockList', JSON.stringify(updatedStockList));
+        setStockList(updatedStockList);
     };
+
+    const setItemCount = (e: React.FocusEvent) => {
+        if((e.target as HTMLTextAreaElement).value === '')
+            return;
+        const updatedStockList = stockList.map((i) => {
+            if (i.name === item.name) {
+                return {...item, count: Number((e.target as HTMLTextAreaElement).value) < 0 ? 0 : Number((e.target as HTMLTextAreaElement).value)};
+            }
+            return i;
+        });
+        setStockList(() => {
+            localStorage.setItem('stockList', JSON.stringify(updatedStockList));
+            return [...updatedStockList];
+        });
+    };
+
+    if(inputRef.current?.value) {
+        inputRef.current.value = '';
+    }
 
     return (
         <div className='list-item' style={{border: (selectedItems.filter(i => i.name === item.name).length > 0) ? '2px solid blue' : '2px solid black'}} {...longPressEvent}>
@@ -93,7 +120,7 @@ const Item = ({
             }}>-</Button>
             <div>
                 <span>{item.name} </span>
-                <span>{item.count}</span>
+                <span><input className="count-input" type='text' onBlur={setItemCount} disabled={Boolean(selectedItems.length)} placeholder={item.count.toString()} ref={inputRef} /></span>
             </div>
             <Button onClick={(e) => {
                 e.stopPropagation();
