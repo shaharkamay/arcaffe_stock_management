@@ -23,20 +23,11 @@ const AddItem = ({stockList, setStockList}: {stockList: ItemI[], setStockList: R
     };
 
     return (
-      <div className="add-item-container">
-        <input
-          className="add-item-input"
-          type="text"
-          onChange={(e) => {
-            setItemName(e.target.value);
-          }}
-          value={itemName}
-          placeholder="Add new item"
-        />
-        <Button className="add-item-btn" onClick={addItemToList}>
-          Add
-        </Button>
-      </div>
+        <>
+            <input className='add-item-input' type='text' onChange={(e) => {setItemName(e.target.value);}} value={itemName} placeholder='Add new item' />
+            <Button className='add-item-btn' onClick={addItemToList}>Add</Button>
+
+        </>
     );
 };
 
