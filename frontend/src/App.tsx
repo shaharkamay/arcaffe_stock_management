@@ -8,10 +8,7 @@ const App = (): JSX.Element => {
     <>
       <Header />
       <main>
-        <div className='container'>
-          <List />    
-    
-        </div>
+        <List />
       </main>
       <Footer />
     </>
