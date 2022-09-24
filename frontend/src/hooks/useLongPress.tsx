@@ -8,8 +8,8 @@ const preventDefault = (e: React.TouchEvent<HTMLElement>) => {
     if (!isTouchEvent(e)) return;
     
     if (e.touches.length < 2 && e.preventDefault) {
-        if ((e.target as HTMLTextAreaElement).className !== 'default-btn') {
-            e.preventDefault();
+        if ((e.target as HTMLTextAreaElement).tagName !== 'BUTTON') {
+          e.preventDefault();
         }
     }
 };

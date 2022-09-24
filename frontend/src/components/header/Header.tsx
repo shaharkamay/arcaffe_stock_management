@@ -13,7 +13,7 @@ const Header = (): JSX.Element => {
   };
   return (
     <header>
-      <div className="container row">
+      <div className="container">
         <div className="header-logo-and-theme">
           {!isTablet && <MobileNav onClick={handleNavToggle} />}
           <a className="logo navbar-link" href="#">
