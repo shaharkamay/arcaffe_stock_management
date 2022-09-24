@@ -3,9 +3,9 @@ import List from './List';
 
 const Nav = (props: JSX.IntrinsicAttributes & React.ClassAttributes<HTMLUListElement> & React.HTMLAttributes<HTMLUListElement>): JSX.Element => {
     return (
-        <nav {...props}>
-            <List className='row navbar-list' />
-        </nav>
+      <nav {...props}>
+        <List className="navbar-list" />
+      </nav>
     );
 };
 

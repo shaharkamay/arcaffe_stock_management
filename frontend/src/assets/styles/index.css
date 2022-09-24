@@ -89,31 +89,7 @@ main {
 }
 
 @media (min-width:700px) {
-    .row {
-        display: flex;
-        justify-content: space-between;
-        gap: 1em;
-    }
-
-    .col {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 1em;
-    }
 }
 
 @media (min-width: 1000px) {
-    .row-large {
-        display: flex;
-        justify-content: space-between;
-        gap: 2em;
-    }
-
-    .col-large {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 2em;
-    }
 }
