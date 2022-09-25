@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/styles/index.css';
 import App from './App';
-
+import { DndProvider } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
+      <App />
+    </DndProvider>
   </React.StrictMode>
 );
