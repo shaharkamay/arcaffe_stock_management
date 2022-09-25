@@ -54,17 +54,35 @@ const List = () => {
     setStockList(updatedStockList);
   };
 
+  const moveItem = ({
+    fromIndex,
+    toIndex,
+  }: {
+    fromIndex: number;
+    toIndex: number;
+  }) => {
+    setStockList((prevStockList) => {
+      const tempStockList = [...prevStockList];
+      const item = tempStockList.splice(fromIndex, 1)[0];
+      tempStockList.splice(toIndex, 0, item);
+      localStorage.setItem('stockList', JSON.stringify(tempStockList));
+      return tempStockList;
+    });
+  };
+
   return (
     <Wrapper className="list">
       {stockList.map((item, i) => (
         <Item
           key={i}
+          index={i}
           stockList={stockList}
           setStockList={setStockList}
           item={item}
           onItemClick={onItemClick}
           selectedItems={selectedItems}
           setSelectedItems={setSelectedItems}
+          moveItem={moveItem}
         />
       ))}
       {selectedItems.length <= 0 && (

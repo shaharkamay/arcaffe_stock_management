@@ -1,8 +1,10 @@
-import React, {useRef} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Button from '../../Button/Button';
-import {ItemI} from '../../../@types';
+import { ItemI } from '../../../@types';
 import useLongPress from '../../../hooks/useLongPress';
 import styled, { css } from 'styled-components';
+import { useDrag, useDrop } from 'react-dnd';
 
 const Wrapper = styled.div<{ selected: boolean }>`
   display: flex;
@@ -13,8 +15,9 @@ const Wrapper = styled.div<{ selected: boolean }>`
   background-color: var(--background);
   position: relative;
   box-sizing: border-box;
+  cursor: move;
 
-  & + &::before {
+  &::after {
     position: absolute;
     margin: 0 auto;
     top: 0;
@@ -59,19 +62,102 @@ const ItemCount = styled.input`
 
 const Item = ({
   item,
+  index,
   onItemClick,
   selectedItems,
   setSelectedItems,
   stockList,
   setStockList,
+  moveItem,
 }: {
   item: ItemI;
+  index: number;
   onItemClick: (e: React.TouchEvent<HTMLElement>, item: ItemI) => void;
   selectedItems: ItemI[];
   setSelectedItems: React.Dispatch<React.SetStateAction<ItemI[]>>;
   stockList: ItemI[];
   setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>;
+  moveItem: ({
+    fromIndex,
+    toIndex,
+  }: {
+    fromIndex: number;
+    toIndex: number;
+  }) => void;
 }): JSX.Element => {
+  const ref = useRef<HTMLInputElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const [{ handlerId }, drop] = useDrop({
+    accept: 'item',
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = (item as { index: number }).index;
+      const hoverIndex = index;
+      // Don't replace items with themselves
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      // Determine rectangle on screen
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY =
+        (clientOffset as { y: number }).y - hoverBoundingRect.top;
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      // Dragging downwards
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      // Dragging upwards
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      // Time to actually perform the action
+      moveItem({
+        fromIndex: dragIndex,
+        toIndex: hoverIndex,
+      });
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      (item as { index: number }).index = hoverIndex;
+    },
+  });
+
+  const [{ isDragging }, dragRef] = useDrag({
+    type: 'item',
+    item: () => {
+      return { id: item.name, index, text: item.name };
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+    isDragging: (monitor) => {
+      return monitor.getItem().id === item.name;
+    },
+  });
+
+  const opacity = isDragging ? 0.5 : 1;
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onLongPress = (e: React.TouchEvent<HTMLElement>) => {
@@ -176,58 +262,71 @@ const Item = ({
     inputRef.current.value = '';
   }
 
+  const dropRef = drop(ref) as React.Ref<HTMLDivElement>;
+
   return (
-    <Wrapper
-      selected={selectedItems.filter((i) => i.name === item.name).length > 0}
-      {...{
-        onMouseDown,
-        onTouchStart,
-        onMouseUp,
-        onMouseLeave,
-        onTouchEnd,
-      }}
-    >
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          alterItemCount(-5);
-        }}
-      >
-        -5
-      </Button>
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          alterItemCount(-1);
-        }}
-      >
-        -
-      </Button>
-      <ItemName>{item.name} </ItemName>
-      <ItemCount
-        type="text"
-        onBlur={setItemCount}
-        disabled={Boolean(selectedItems.length)}
-        placeholder={item.count.toString()}
-        ref={inputRef}
-      />
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          alterItemCount(1);
-        }}
-      >
-        +
-      </Button>
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          alterItemCount(5);
-        }}
-      >
-        +5
-      </Button>
-    </Wrapper>
+    <div ref={dropRef}>
+      {isMounted &&
+        createPortal(
+          <Wrapper
+            ref={dragRef}
+            style={{ opacity }}
+            selected={
+              selectedItems.filter((i) => i.name === item.name).length > 0
+            }
+            {...{
+              onMouseDown,
+              onTouchStart,
+              onMouseUp,
+              onMouseLeave,
+              onTouchEnd,
+            }}
+            data-handler-id={handlerId}
+          >
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                alterItemCount(-5);
+              }}
+            >
+              -5
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                alterItemCount(-1);
+              }}
+            >
+              -
+            </Button>
+            <ItemName>{item.name} </ItemName>
+            <ItemCount
+              type="text"
+              onBlur={setItemCount}
+              disabled={Boolean(selectedItems.length)}
+              placeholder={item.count.toString()}
+              ref={inputRef}
+            />
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                alterItemCount(1);
+              }}
+            >
+              +
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                alterItemCount(5);
+              }}
+            >
+              +5
+            </Button>
+          </Wrapper>,
+          (dropRef as unknown as { current: HTMLElement })?.current
+        )}
+    </div>
   );
 };
 
