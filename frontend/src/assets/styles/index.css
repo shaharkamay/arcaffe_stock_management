@@ -78,6 +78,14 @@ a {
     color: var(--link-clr);
 }
 
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 main {
     background-color: var(--background-secondary);
 }

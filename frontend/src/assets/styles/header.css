@@ -33,9 +33,6 @@ header {
     text-decoration: none;
     color: var(--clr-light);
 }
-.navbar-link:hover {
-    opacity: 0.75;
-}
 
 .mobile-nav {
   text-align: left;
@@ -50,9 +47,6 @@ header {
   border-radius: 50%;
   background-color: var(--clr-secondary);
   transition: opacity 250ms ease;
-}
-.nav-toggle:hover {
-  opacity: 0.75;
 }
 
 .hamburger {

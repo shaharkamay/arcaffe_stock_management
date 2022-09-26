@@ -25,11 +25,6 @@ footer {
     width: 1rem;
 }
 
-.copyright-link:hover,
-.copyright-link:focus {
-    opacity: 0.75;
-}
-
 .credit {
     display: flex;
     gap: 0.2rem;
