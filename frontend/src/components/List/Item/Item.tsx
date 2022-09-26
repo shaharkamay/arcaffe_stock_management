@@ -5,6 +5,12 @@ import { ItemI } from '../../../@types';
 import useLongPress from '../../../hooks/useLongPress';
 import styled, { css } from 'styled-components';
 import { useDrag, useDrop } from 'react-dnd';
+import {
+  setItemKeyValue,
+  updateAllItemsCount,
+  updateItemCount,
+  updateLocalStockList,
+} from '../../../utils';
 
 const Wrapper = styled.div<{ selected: boolean }>`
   display: flex;
@@ -37,26 +43,54 @@ const Wrapper = styled.div<{ selected: boolean }>`
 const ItemName = styled.span`
   width: 100%;
   text-align: start;
+  user-select: none;
 `;
 
-const ItemCount = styled.input`
+const CountWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+`;
+
+const ItemCount = styled.input<{ belowAmountNeeded?: boolean }>`
   display: inline-flex;
   text-align: center;
   align-items: center;
   justify-content: center;
-  background-color: var(--background);
+  background-color: ${({
+    belowAmountNeeded,
+  }: {
+    belowAmountNeeded?: boolean;
+  }) => (belowAmountNeeded ? '#ffc8c8' : '#c2ffc2')};
   color: var(--foreground);
   font-weight: 600;
   font-size: 1rem;
   border: 3px solid var(--clr-quaternary);
   border-radius: 4px;
   box-sizing: border-box;
-  height: 3rem;
   width: 3rem;
   outline: none;
 
   &:focus {
     border: 3px solid var(--clr-tertiary);
+    background-color: var(--background);
+    &::placeholder {
+      color: transparent;
+    }
+  }
+`;
+
+const ItemAmountNeeded = styled(ItemCount)`
+  background-color: var(--clr-primary);
+  color: var(--clr-light);
+  border-width: 3px;
+  border-radius: 999px;
+
+  &::placeholder {
+    color: var(--clr-light);
+  }
+  &:focus {
+    color: var(--foreground);
   }
 `;
 
@@ -207,24 +241,12 @@ const Item = ({
       }
     }
     let updatedStockList: ItemI[] = [];
-    let updatedSelectedItems = [];
     if (!doesExistInSelectedItems) {
-      updatedStockList = stockList.map((i) => {
-        if (i.name === item.name) {
-          const newTotal = item.count + amount < 0 ? 0 : item.count + amount;
-
-          return { ...item, count: newTotal };
-        }
-        return i;
-      });
+      updatedStockList = updateItemCount(stockList, item, amount);
     } else {
-      updatedSelectedItems = [...selectedItems];
-      for (let j = 0; j < updatedSelectedItems.length; j++) {
-        if (updatedSelectedItems[j].count + amount < 0)
-          updatedSelectedItems[j].count = 0;
-        else updatedSelectedItems[j].count += amount;
-      }
+      const updatedSelectedItems = updateAllItemsCount(selectedItems, amount);
       setSelectedItems(updatedSelectedItems);
+
       updatedStockList = [...stockList];
       for (let j = 0; j < stockList.length; j++) {
         for (let k = 0; k < updatedSelectedItems.length; k++) {
@@ -234,28 +256,41 @@ const Item = ({
         }
       }
     }
-    localStorage.setItem('stockList', JSON.stringify(updatedStockList));
+    updateLocalStockList(updatedStockList);
     setStockList(updatedStockList);
   };
 
   const setItemCount = (e: React.FocusEvent) => {
     if ((e.target as HTMLTextAreaElement).value === '') return;
-    const updatedStockList = stockList.map((i) => {
-      if (i.name === item.name) {
-        return {
-          ...item,
-          count:
-            Number((e.target as HTMLTextAreaElement).value) < 0
-              ? 0
-              : Number((e.target as HTMLTextAreaElement).value),
-        };
-      }
-      return i;
-    });
+    const count =
+      Number((e.target as HTMLTextAreaElement).value) < 0
+        ? 0
+        : Number((e.target as HTMLTextAreaElement).value);
+    const updatedStockList = setItemKeyValue(stockList, item, count, 'count');
     setStockList(() => {
-      localStorage.setItem('stockList', JSON.stringify(updatedStockList));
+      updateLocalStockList(updatedStockList);
       return [...updatedStockList];
     });
+    (e.target as HTMLTextAreaElement).value = '';
+  };
+
+  const setItemAmountNeeded = (e: React.FocusEvent) => {
+    if ((e.target as HTMLTextAreaElement).value === '') return;
+    const amountNeeded =
+      Number((e.target as HTMLTextAreaElement).value) < 0
+        ? 0
+        : Number((e.target as HTMLTextAreaElement).value);
+    const updatedStockList = setItemKeyValue(
+      stockList,
+      item,
+      amountNeeded,
+      'amountNeeded'
+    );
+    setStockList(() => {
+      updateLocalStockList(updatedStockList);
+      return [...updatedStockList];
+    });
+    (e.target as HTMLTextAreaElement).value = '';
   };
 
   if (inputRef.current?.value) {
@@ -300,13 +335,24 @@ const Item = ({
               -
             </Button>
             <ItemName>{item.name} </ItemName>
-            <ItemCount
-              type="text"
-              onBlur={setItemCount}
-              disabled={Boolean(selectedItems.length)}
-              placeholder={item.count.toString()}
-              ref={inputRef}
-            />
+            <CountWrapper>
+              <ItemCount
+                type="text"
+                onBlur={setItemCount}
+                disabled={Boolean(selectedItems.length)}
+                placeholder={item.count.toString()}
+                belowAmountNeeded={item.count < item.amountNeeded}
+                ref={inputRef}
+              />
+              <ItemAmountNeeded
+                type="text"
+                onBlur={setItemAmountNeeded}
+                disabled={Boolean(selectedItems.length)}
+                placeholder={item.amountNeeded.toString()}
+                ref={inputRef}
+              />
+            </CountWrapper>
+
             <Button
               onClick={(e) => {
                 e.stopPropagation();
