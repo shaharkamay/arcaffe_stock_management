@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import Button from '../../Button/Button';
+import { Button } from '../../../components';
 import { ItemI } from '../../../@types';
-import useLongPress from '../../../hooks/useLongPress';
+import { useLongPress } from '../../../hooks';
 import styled, { css } from 'styled-components';
 import { useDrag, useDrop } from 'react-dnd';
 import {

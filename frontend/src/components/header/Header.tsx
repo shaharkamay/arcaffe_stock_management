@@ -4,6 +4,7 @@ import '../../assets/styles/header.css';
 import { useMediaQuery } from 'react-responsive';
 import MobileNav from './nav/MobileNav';
 import Logo from '../../assets/images/coffee-cup.svg';
+import { Link } from 'react-router-dom';
 
 const Header = (): JSX.Element => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -16,9 +17,9 @@ const Header = (): JSX.Element => {
       <div className="container">
         <div className="header-logo-and-theme">
           {!isTablet && <MobileNav onClick={handleNavToggle} />}
-          <a className="logo navbar-link" href="#">
+          <Link className="logo navbar-link" to="/">
             <img src={Logo} />
-          </a>
+          </Link>
         </div>
         <div
           className={`header-navbar ${

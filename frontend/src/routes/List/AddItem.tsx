@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import ButtonOrigin from '../Button/Button';
+import React, { useState } from 'react';
+import { Button as ButtonOrigin } from '../../components';
 import { ItemI } from '../../@types';
 import styled from 'styled-components';
 

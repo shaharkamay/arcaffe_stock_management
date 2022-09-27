@@ -4,11 +4,11 @@ import Item from './Item';
 
 const List = (props: JSX.IntrinsicAttributes & React.ClassAttributes<HTMLUListElement> & React.HTMLAttributes<HTMLUListElement>): JSX.Element => {
     return (
-        <ul {...props}>
-            <Item>Home</Item>
-            <Item>Login</Item>
-            <Item>Help</Item>
-        </ul>
+      <ul {...props}>
+        <Item to="/">Home</Item>
+        <Item to="/login">Login</Item>
+        <Item to="/summary">Summary</Item>
+      </ul>
     );
 };
 
