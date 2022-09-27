@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Item from './Item/Item';
-import {ItemI} from '../../@types';
+import { ItemI } from '../../@types';
 import AddItem from './AddItem';
-import Button from '../Button/Button';
+import { Button } from '../../components';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
