@@ -1,5 +1,6 @@
 export {
   updateLocalStockList,
+  getLocalStockList,
   updateItemCount,
   updateAllItemsCount,
   setItemKeyValue,
