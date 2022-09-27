@@ -4,6 +4,12 @@ export const updateLocalStockList = (stockList: ItemI[]) => {
   localStorage.setItem('stockList', JSON.stringify(stockList));
 };
 
+export const getLocalStockList = () => {
+  const localStockList: string = localStorage.getItem('stockList') || '[]';
+  const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
+  return parsedStockList;
+};
+
 export const setItemKeyValue = (
   stockList: ItemI[],
   item: ItemI,

@@ -17,7 +17,7 @@ const Header = (): JSX.Element => {
       <div className="container">
         <div className="header-logo-and-theme">
           {!isTablet && <MobileNav onClick={handleNavToggle} />}
-          <Link className="logo navbar-link" to="/">
+          <Link className="logo navbar-link" to="/arcaffe_stock_management">
             <img src={Logo} />
           </Link>
         </div>

@@ -23,9 +23,9 @@ const RemoveButton = styled(Button)`
   background-color: red;
 `;
 
-const localStockList: string = localStorage.getItem('stockList') || '[]';
-const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
 const List = () => {
+  const localStockList: string = localStorage.getItem('stockList') || '[]';
+  const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
   const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
 
   const [selectedItems, setSelectedItems] = useState<ItemI[]>([]);
