@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { Header } from './components';
 import Footer from './components/footer/Footer';
@@ -30,6 +31,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = (): JSX.Element => {
-  return <RouterProvider router={router} />;
+  const { i18n } = useTranslation();
+
+  const lang = i18n.language;
+  return (
+    <div className="app" lang={lang} dir={lang === 'he' ? 'rtl' : 'ltr'}>
+      <RouterProvider router={router} />
+    </div>
+  );
 };
 export default App;

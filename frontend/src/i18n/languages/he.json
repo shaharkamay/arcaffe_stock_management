@@ -1,0 +1,20 @@
+{
+  "header": {
+    "home": "בית",
+    "login": "התחבר",
+    "summary": "סיכום"
+  },
+  "item": {
+    "add": "הוסף",
+    "addNewItem": "הוסף פריט"
+  },
+  "summary": {
+    "name": "שם",
+    "amountToOrder": "כמות להזמין"
+  },
+  "footer": {
+    "copyright": "© זכויות יוצרים 2022",
+    "dean": "דין שלו",
+    "shahar": "שחר קמאי"
+  }
+}

@@ -323,6 +323,7 @@ const Item = ({
                 e.stopPropagation();
                 alterItemCount(-5);
               }}
+              dir="ltr"
             >
               -5
             </Button>
@@ -331,6 +332,7 @@ const Item = ({
                 e.stopPropagation();
                 alterItemCount(-1);
               }}
+              dir="ltr"
             >
               -
             </Button>
@@ -358,6 +360,7 @@ const Item = ({
                 e.stopPropagation();
                 alterItemCount(1);
               }}
+              dir="ltr"
             >
               +
             </Button>
@@ -366,6 +369,7 @@ const Item = ({
                 e.stopPropagation();
                 alterItemCount(5);
               }}
+              dir="ltr"
             >
               +5
             </Button>

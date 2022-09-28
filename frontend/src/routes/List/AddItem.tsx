@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Button as ButtonOrigin } from '../../components';
 import { ItemI } from '../../@types';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.div`
   display: flex;
   width: 90%;
   gap: 0.5rem;
-  margin: 0 auto;
+  margin: 0.5rem auto;
 `;
 
 const Input = styled.input`
@@ -16,7 +17,6 @@ const Input = styled.input`
   font-size: 1rem;
   border-radius: 0.4rem;
   border: 1px solid var(--clr-quinary);
-  margin-top: 0.5rem;
   padding: 0.7rem;
 `;
 
@@ -29,7 +29,6 @@ const Button = styled(ButtonOrigin)`
   font-size: 1rem;
   font-weight: 600;
   width: 30%;
-  margin: 0.5rem 0;
 `;
 
 const AddItem = ({
@@ -39,6 +38,8 @@ const AddItem = ({
   stockList: ItemI[];
   setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>;
 }): JSX.Element => {
+  const { t } = useTranslation();
+
   const [itemName, setItemName] = useState<string>('');
 
   const addItemToList = () => {
@@ -66,9 +67,9 @@ const AddItem = ({
           setItemName(e.target.value);
         }}
         value={itemName}
-        placeholder="Add new item"
+        placeholder={t('item.addNewItem')}
       />
-      <Button onClick={addItemToList}>Add</Button>
+      <Button onClick={addItemToList}>{t('item.add')}</Button>
     </Wrapper>
   );
 };
