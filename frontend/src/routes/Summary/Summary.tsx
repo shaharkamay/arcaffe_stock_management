@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { getLocalStockList } from '../../utils';
 
@@ -36,14 +37,16 @@ const Td = styled.td`
 `;
 
 const Summary = () => {
+  const { t } = useTranslation();
+
   const stockList = getLocalStockList();
   return (
     <Wrapper>
       <Table>
         <thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Amount to order</Th>
+            <Th>{t('summary.name')}</Th>
+            <Th>{t('summary.amountToOrder')}</Th>
           </Tr>
         </thead>
         <tbody>

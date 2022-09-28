@@ -27,8 +27,8 @@
     --background-secondary: var(--clr-light-gray);
     --foreground-secondary: var(--clr-primary);
 
-    --font-text: 'Roboto', sans-serif;
-    --font-title: 'Bebas Neue', cursive;
+    --font-text: 'Roboto', arial;
+    --font-title: 'Bebas Neue', cursive, arial;
     --theme-icon: '☀';
 
     --inverted: none;
@@ -38,6 +38,12 @@
     --link-clr: #0000ee;
     --visited-clr: #551a8b;
 
+    --align: left;
+}
+
+
+.app:lang(he) {
+    --align: right;
 }
 
 

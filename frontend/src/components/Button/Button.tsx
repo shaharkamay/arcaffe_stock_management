@@ -30,6 +30,7 @@ const Button = ({
   primary?: boolean;
   secondary?: boolean;
   tertiary?: boolean;
+  [attr: string]: unknown;
 }): JSX.Element => {
   return (
     <StyledButton
