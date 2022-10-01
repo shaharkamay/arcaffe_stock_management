@@ -4,14 +4,14 @@ import styled from 'styled-components';
 const StyledButton = styled.button`
   border: none;
   border-radius: 999px;
-  background-color: var(--background-secondary);
+  background-color: var(--background);
   font-size: 1rem;
   height: 3rem;
   aspect-ratio: 1 / 1;
+  color: var(--foreground);
 
   &:active {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: var(--background-secondary);
   }
 `;
 

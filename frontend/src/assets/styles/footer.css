@@ -1,8 +1,8 @@
 footer {
     font-family: var(--font-title);
     font-size: 1.2rem;
-    background-color: var(--clr-secondary);
-    padding: 1em;
+    background-color: var(--clr-primary);
+    padding: 0.5em 0;
     color: var(--clr-light);
     text-align: center;
     display: flex;

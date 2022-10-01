@@ -1,49 +1,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,400;1,500&display=swap');
 
 :root {
-    --clr-accent: #967E76;
-    --clr-accent-constant: var(--clr-accent);
-
+    /* CORE */
     --clr-light: white;
     --clr-light-gray: #F1ECE6;
     --clr-dark: #121212;
     --clr-dark-lighter: #272727;
     --clr-brown: #704F4F;
     --clr-brown-lighter: #967E76;
+    --clr-brown-darker: #472D2D;
     --clr-cream: #D7C0AE;
     --clr-cream-lighter: #EEE3CB;
     --clr-sky: #a4b0ba;
     --clr-sky-lighter: #B7C4CF;
+    
+    --inverted-constant: invert(1) hue-rotate(180deg);
 
+    /* FONT */
+    --font-text: 'Roboto', arial;
+    --font-title: 'Bebas Neue', cursive, arial;
+    
+    /* CORE AGGREGATORS */
+    --foreground: var(--clr-dark);
+    --background: var(--clr-light);
+    --background-secondary: var(--clr-light-gray);
+    --foreground-secondary: var(--clr-primary);
     --clr-primary: var(--clr-brown);
     --clr-secondary: var(--clr-brown-lighter);
     --clr-tertiary: var(--clr-cream);
     --clr-quaternary: var(--clr-cream-lighter);
     --clr-quinary: var(--clr-sky);
     --clr-quinary-alternate: var(--clr-sky-lighter);
-
-    --foreground: var(--clr-dark);
-    --background: var(--clr-light);
-    --background-secondary: var(--clr-light-gray);
-    --foreground-secondary: var(--clr-primary);
-
-    --font-text: 'Roboto', arial;
-    --font-title: 'Bebas Neue', cursive, arial;
-    --theme-icon: '☀';
-
-    --inverted: none;
-
-    --inverted-constant: invert(1) hue-rotate(180deg);
-
     --link-clr: #0000ee;
     --visited-clr: #551a8b;
-
-    --align: left;
+    --inverted: none;
+    --theme-icon: '☀';
 }
 
+@media (prefers-color-scheme: dark) {
+    .theme-auto {
+        --foreground: var(--clr-light);
+        --background: var(--clr-dark);
+        --background-secondary: var(--clr-dark-lighter);
+        --foreground-secondary: var(--clr-light-gray);
+        --clr-primary: var(--clr-brown-darker);
+        --clr-secondary: var(--clr-brown);
+        --clr-tertiary: var(--clr-cream);
+        --clr-quaternary: var(--clr-brown-lighter);
+        --clr-quinary: var(--clr-sky);
+        --clr-quinary-alternate: var(--clr-sky-lighter);
+        --link-clr: #0000ee;
+        --visited-clr: #551a8b;
+        --link-clr: #8ab4f8;
+        --visited-clr: #c58af9;
+        --inverted: invert(1) hue-rotate(180deg);
+        --theme-icon: "🌛︎";
+    }
+}
 
-.app:lang(he) {
-    --align: right;
+.theme-dark {
+    --foreground: var(--clr-light);
+    --background: var(--clr-dark);
+    --background-secondary: var(--clr-dark-lighter);
+    --foreground-secondary: var(--clr-light-gray);
+    --clr-primary: var(--clr-brown-darker);
+    --clr-secondary: var(--clr-brown);
+    --clr-tertiary: var(--clr-cream);
+    --clr-quaternary: var(--clr-brown-lighter);
+    --clr-quinary: var(--clr-sky);
+    --clr-quinary-alternate: var(--clr-sky-lighter);
+    --link-clr: #0000ee;
+    --visited-clr: #551a8b;
+    --link-clr: #8ab4f8;
+    --visited-clr: #c58af9;
+    --inverted: invert(1) hue-rotate(180deg);
+    --theme-icon: "🌛︎";
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 
@@ -93,7 +130,8 @@ a {
 }
 
 main {
-    background-color: var(--background-secondary);
+    flex: 1;
+    background-color: var(--background);
 }
 
 .container {

@@ -10,7 +10,11 @@ const Item = ({
 }): JSX.Element => {
   return (
     <li>
-      <NavLink className="navbar-link" to={to}>
+      <NavLink
+        className="navbar-link"
+        to={to}
+        aria-label={children?.toString()}
+      >
         {children}
       </NavLink>
     </li>

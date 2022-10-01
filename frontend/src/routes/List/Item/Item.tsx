@@ -18,10 +18,11 @@ const Wrapper = styled.div<{ selected: boolean }>`
   padding: 0.7rem;
   font-size: 1.2rem;
   gap: 0.5rem;
-  background-color: var(--background);
+  background-color: var(--background-secondary);
   position: relative;
   box-sizing: border-box;
   cursor: move;
+  color: var(--foreground);
 
   &::after {
     position: absolute;
@@ -30,7 +31,7 @@ const Wrapper = styled.div<{ selected: boolean }>`
     content: '';
     width: calc(100% - 1.4rem);
     height: 1px;
-    background-color: var(--background-secondary);
+    background-color: var(--background);
   }
 
   ${({ selected }: { selected: boolean }) =>
@@ -73,7 +74,7 @@ const ItemCount = styled.input<{ belowAmountNeeded?: boolean }>`
 
   &:focus {
     border: 3px solid var(--clr-tertiary);
-    background-color: var(--background);
+    background-color: var(--background-secondary);
     &::placeholder {
       color: transparent;
     }
