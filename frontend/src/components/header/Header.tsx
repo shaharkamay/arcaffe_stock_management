@@ -3,8 +3,9 @@ import Nav from './nav/Nav';
 import '../../assets/styles/header.css';
 import { useMediaQuery } from 'react-responsive';
 import MobileNav from './nav/MobileNav';
-import Logo from '../../assets/images/coffee-cup.svg';
+import Logo from '../../assets/images/arcaffe-logo.png';
 import { Link } from 'react-router-dom';
+import Theme from './Theme/Theme';
 
 const Header = (): JSX.Element => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -17,8 +18,12 @@ const Header = (): JSX.Element => {
       <div className="container">
         <div className="header-logo-and-theme">
           {!isTablet && <MobileNav onClick={handleNavToggle} />}
-          <Link className="logo navbar-link" to="/arcaffe_stock_management">
-            <img src={Logo} />
+          <Link
+            className="logo navbar-link"
+            to="/arcaffe_stock_management"
+            aria-label="Home"
+          >
+            <img src={Logo} alt="Arcaffe logo" />
           </Link>
         </div>
         <div
@@ -27,6 +32,7 @@ const Header = (): JSX.Element => {
           }`}
         >
           <Nav />
+          <Theme />
         </div>
       </div>
     </header>

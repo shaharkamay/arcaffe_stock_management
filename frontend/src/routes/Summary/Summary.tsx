@@ -10,9 +10,9 @@ const Wrapper = styled.div.attrs(() => ({ className: 'container' }))`
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid var(--background-secondary);
-  background-color: var(--background);
-  border-bottom: 2px solid var(--clr-secondary);
+  border: 1px solid var(--background);
+  background-color: var(--background-secondary);
+  border-bottom: 2px solid var(--clr-primary);
   border-radius: 4px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05),
     0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
@@ -25,15 +25,15 @@ const Th = styled.th`
   font-weight: normal;
   font-size: 1.2rem;
   color: var(--clr-light);
-  border: 1px solid var(--background-secondary);
+  border: 1px solid var(--background);
   padding: 0.5rem 1rem;
-  background-color: var(--clr-secondary);
+  background-color: var(--clr-primary);
 `;
 
 const Td = styled.td`
   padding: 0.2rem 0.5rem;
-  color: var(--clr-secondary);
-  border: 1px solid var(--background-secondary);
+  color: var(--foreground-secondary);
+  border: 1px solid var(--background);
 `;
 
 const Summary = () => {

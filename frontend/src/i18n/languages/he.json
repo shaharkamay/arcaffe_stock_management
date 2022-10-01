@@ -2,7 +2,12 @@
   "header": {
     "home": "בית",
     "login": "התחבר",
-    "summary": "סיכום"
+    "summary": "סיכום",
+    "theme": {
+      "auto": "אוטו'",
+      "light": "בהיר",
+      "dark": "כהה"
+    }
   },
   "item": {
     "add": "הוסף",

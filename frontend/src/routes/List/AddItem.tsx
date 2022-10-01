@@ -8,7 +8,8 @@ const Wrapper = styled.div`
   display: flex;
   width: 90%;
   gap: 0.5rem;
-  margin: 0.5rem auto;
+  margin: 0 auto;
+  padding: 1rem 0;
 `;
 
 const Input = styled.input`
@@ -17,6 +18,8 @@ const Input = styled.input`
   font-size: 1rem;
   border-radius: 0.4rem;
   border: 1px solid var(--clr-quinary);
+  background-color: var(--background-secondary);
+  color: var(--foreground);
   padding: 0.7rem;
 `;
 
@@ -24,7 +27,7 @@ const Button = styled(ButtonOrigin)`
   padding: 1rem;
   border: none;
   border-radius: 0.4rem;
-  background-color: var(--clr-secondary);
+  background-color: var(--clr-primary);
   color: white;
   font-size: 1rem;
   font-weight: 600;

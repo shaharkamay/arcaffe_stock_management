@@ -2,7 +2,12 @@
   "header": {
     "home": "Home",
     "login": "Login",
-    "summary": "Summary"
+    "summary": "Summary",
+    "theme": {
+      "auto": "Auto",
+      "light": "Light",
+      "dark": "Dark"
+    }
   },
   "item": {
     "add": "Add",

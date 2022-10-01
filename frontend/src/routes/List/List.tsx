@@ -19,7 +19,7 @@ const RemoveButton = styled(Button)`
   font-size: 1rem;
   font-weight: 600;
   width: 90%;
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   background-color: red;
 `;
 
