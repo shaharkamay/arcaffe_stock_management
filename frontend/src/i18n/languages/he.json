@@ -15,6 +15,8 @@
   },
   "summary": {
     "name": "שם",
+    "amount": "כמות",
+    "amountNeeded": "כמות רצויה",
     "amountToOrder": "כמות להזמין"
   },
   "footer": {
