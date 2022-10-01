@@ -46,19 +46,23 @@ const Summary = () => {
         <thead>
           <Tr>
             <Th>{t('summary.name')}</Th>
+            <Th>{t('summary.amount')}</Th>
+            <Th>{t('summary.amountNeeded')}</Th>
             <Th>{t('summary.amountToOrder')}</Th>
           </Tr>
         </thead>
         <tbody>
           {stockList.map((item) => {
-            const amount =
+            const amountToOrder =
               item.amountNeeded - item.count < 0
                 ? 0
                 : item.amountNeeded - item.count;
             return (
               <Tr key={item.name}>
                 <Td>{item.name}</Td>
-                <Td>{amount}</Td>
+                <Td>{item.count}</Td>
+                <Td>{item.amountNeeded}</Td>
+                <Td>{amountToOrder}</Td>
               </Tr>
             );
           })}
