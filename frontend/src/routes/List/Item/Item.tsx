@@ -45,6 +45,8 @@ const ItemName = styled.span`
   width: 100%;
   text-align: start;
   user-select: none;
+  font-size: 1rem;
+  word-break: break-all;
 `;
 
 const CountWrapper = styled.div`

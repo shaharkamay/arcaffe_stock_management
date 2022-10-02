@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../assets/styles/footer.css';
+import { SelectList } from '../';
 import Credit from './Credit';
 
 const Footer = (): JSX.Element => {
@@ -31,10 +32,14 @@ const Footer = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <div>
-        <button onClick={() => changeLanguage('he')}>he</button>
-        <button onClick={() => changeLanguage('en')}>en</button>
-      </div>
+      <SelectList
+        initialValue="he"
+        onChange={(e) => changeLanguage((e.target as HTMLSelectElement).value)}
+        list={[
+          { value: 'he', displayName: 'he' },
+          { value: 'en', displayName: 'en' },
+        ]}
+      />
     </footer>
   );
 };

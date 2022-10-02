@@ -1,5 +1,5 @@
 import React from 'react';
-import ghLogo from '../../assets/images/GitHub-Mark-32px.png';
+import ghLogo from '../../assets/images/GitHub-Mark-64px.png';
 import linkedinLogo from '../../assets/images/linkedin-logo.png';
 
 function Credit({ ghName, ghLink, linkedinLink }: Record<string, string>) {
