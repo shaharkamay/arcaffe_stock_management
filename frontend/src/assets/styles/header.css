@@ -75,22 +75,6 @@ header {
   align-items: center;
 }
 
-.select-theme {
-  outline: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--clr-light);
-  font-weight: 500;
-  font-size: 1.2rem;
-  font-family: var(--font-title);
-}
-
-.select-theme option {
-  color: var(--foreground);
-  background-color: var(--background-secondary);
-}
-
 .theme-icon::before {
   content: var(--theme-icon);
   color: var(--clr-light);
