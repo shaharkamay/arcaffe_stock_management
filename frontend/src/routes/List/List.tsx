@@ -20,7 +20,7 @@ const RemoveButton = styled(Button)`
   font-weight: 600;
   width: 90%;
   margin: 1rem 0;
-  background-color: red;
+  background-color: darkred;
 `;
 
 const List = () => {
