@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../assets/styles/footer.css';
-import { SelectList } from '../';
 import Credit from './Credit';
 
 const Footer = (): JSX.Element => {
   const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
   const changeLanguage = (lng: string) => {
     void i18n.changeLanguage(lng);
@@ -13,7 +13,7 @@ const Footer = (): JSX.Element => {
 
   return (
     <footer>
-      <div className="container">
+      <div className="container" style={{ display: 'flex' }}>
         <div className="copyright">
           <div className="copyright-item">{t('footer.copyright')}</div>
           <div className="copyright-item">
@@ -31,15 +31,26 @@ const Footer = (): JSX.Element => {
             />
           </div>
         </div>
+        {lang === 'he' ? (
+          <button
+            className="lng-button"
+            onClick={() => {
+              changeLanguage('en');
+            }}
+          >
+            <span className="lng-button-text">HE</span>
+          </button>
+        ) : (
+          <button
+            className="lng-button"
+            onClick={() => {
+              changeLanguage('he');
+            }}
+          >
+            <span className="lng-button-text">EN</span>
+          </button>
+        )}
       </div>
-      <SelectList
-        initialValue="he"
-        onChange={(e) => changeLanguage((e.target as HTMLSelectElement).value)}
-        list={[
-          { value: 'he', displayName: 'he' },
-          { value: 'en', displayName: 'en' },
-        ]}
-      />
     </footer>
   );
 };
