@@ -66,7 +66,7 @@ header {
 .nav-visible {
   display: flex;
   flex-direction: column;
-  max-height: 8rem;
+  max-height: 9rem;
   transition: max-height 0.3s;
 }
 
@@ -75,10 +75,19 @@ header {
   align-items: center;
 }
 
-.theme-icon::before {
-  content: var(--theme-icon);
-  color: var(--clr-light);
-  font-size: 1.2rem;
+
+.theme-button {
+  background: none;
+  border: 1px solid var(--clr-secondary);
+  border-radius: 0.6rem;
+  padding: 0.4rem;
+  display: flex;
+}
+
+.theme-button-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: var(--clr-light);
 }
 
 @media (min-width: 700px) {

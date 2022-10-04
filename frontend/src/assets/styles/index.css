@@ -17,8 +17,8 @@
     --inverted-constant: invert(1) hue-rotate(180deg);
 
     /* FONT */
-    --font-text: 'Roboto', arial;
-    --font-title: 'Bebas Neue', cursive, arial;
+    --font-text: 'Roboto', Narkisim;
+    --font-title: 'Bebas Neue', cursive, Narkisim;
     
     /* CORE AGGREGATORS */
     --foreground: var(--clr-dark);

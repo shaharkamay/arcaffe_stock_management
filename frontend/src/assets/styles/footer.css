@@ -43,3 +43,17 @@ footer {
     width: 1em;
     filter: var(--inverted-constant);
 }
+
+.lng-button {
+    background: none;
+    border: 1px solid var(--clr-secondary);
+    border-radius: 0.6rem;
+    padding: 0.4rem;
+    display: flex;
+    align-self:center;
+}
+  
+.lng-button-text {
+    font-weight: 600;
+    color: var(--clr-light);
+}
