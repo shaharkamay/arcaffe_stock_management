@@ -11,6 +11,7 @@ import {
   updateItemCount,
   updateLocalStockList,
 } from '../../../utils';
+import checkMarkSvg from '../../../assets/images/check_circle.svg';
 
 const Wrapper = styled.div<{ selected: boolean }>`
   display: flex;
@@ -47,6 +48,14 @@ const ItemName = styled.span`
   user-select: none;
   font-size: 1rem;
   word-break: break-all;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+const Check = styled.img`
+  width: 1.2rem;
+  height: 1.2rem;
 `;
 
 const CountWrapper = styled.div`
@@ -198,6 +207,7 @@ const Item = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onLongPress = (e: React.TouchEvent<HTMLElement>) => {
+    navigator?.vibrate?.(1);
     onItemClick(e, item);
   };
 
@@ -302,6 +312,8 @@ const Item = ({
 
   const dropRef = drop(ref) as React.Ref<HTMLDivElement>;
 
+  const selected = selectedItems.filter((i) => i.name === item.name).length > 0;
+
   return (
     <div ref={dropRef}>
       {isMounted &&
@@ -309,9 +321,7 @@ const Item = ({
           <Wrapper
             ref={dragRef}
             style={{ opacity }}
-            selected={
-              selectedItems.filter((i) => i.name === item.name).length > 0
-            }
+            selected={selected}
             {...{
               onMouseDown,
               onTouchStart,
@@ -339,7 +349,10 @@ const Item = ({
             >
               -
             </Button>
-            <ItemName>{item.name} </ItemName>
+            <ItemName>
+              {item.name}
+              {selected && <Check src={checkMarkSvg} />}
+            </ItemName>
             <CountWrapper>
               <ItemCount
                 type="text"
