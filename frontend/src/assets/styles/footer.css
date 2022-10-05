@@ -55,5 +55,5 @@ footer {
   
 .lng-button-text {
     font-weight: 600;
-    color: #00a843;
+    color: var(--clr-light);
 }

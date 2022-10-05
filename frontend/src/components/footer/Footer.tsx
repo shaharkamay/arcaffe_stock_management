@@ -38,7 +38,7 @@ const Footer = (): JSX.Element => {
               changeLanguage('en');
             }}
           >
-            <span className="lng-button-text">HE</span>
+            <span className="lng-button-text">EN</span>
           </button>
         ) : (
           <button
@@ -47,7 +47,7 @@ const Footer = (): JSX.Element => {
               changeLanguage('he');
             }}
           >
-            <span className="lng-button-text">EN</span>
+            <span className="lng-button-text">HE</span>
           </button>
         )}
       </div>

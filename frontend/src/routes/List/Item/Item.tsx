@@ -334,15 +334,6 @@ const Item = ({
             <Button
               onClick={(e) => {
                 e.stopPropagation();
-                alterItemCount(-5);
-              }}
-              dir="ltr"
-            >
-              -5
-            </Button>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
                 alterItemCount(-1);
               }}
               dir="ltr"
@@ -379,15 +370,6 @@ const Item = ({
               dir="ltr"
             >
               +
-            </Button>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                alterItemCount(5);
-              }}
-              dir="ltr"
-            >
-              +5
             </Button>
           </Wrapper>,
           (dropRef as unknown as { current: HTMLElement })?.current
