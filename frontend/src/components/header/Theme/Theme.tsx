@@ -7,7 +7,8 @@ function Theme() {
   return (
     <div className="theme">
       <label id="theme-icon" className="theme-icon"></label>
-      {theme === 'theme-light' ? (
+      {theme === 'theme-light' ||
+      (!theme && window.matchMedia('(prefers-color-scheme: light)').matches) ? (
         <button
           className="theme-button"
           onClick={() => {
