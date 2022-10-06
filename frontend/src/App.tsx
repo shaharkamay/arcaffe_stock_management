@@ -8,7 +8,7 @@ import { List, Summary } from './routes';
 
 const router = createBrowserRouter([
   {
-    path: '/arcaffe_stock_management',
+    path: '/',
     element: (
       <>
         <Header />
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <List />,
       },
       {
-        path: '/arcaffe_stock_management/summary',
+        path: '/summary',
         element: <Summary />,
       },
     ],

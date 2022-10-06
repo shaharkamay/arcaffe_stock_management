@@ -10,9 +10,9 @@ const List = (
   const { t } = useTranslation();
   return (
     <ul {...props}>
-      <Item to="/arcaffe_stock_management">{t('header.home')}</Item>
-      <Item to="/arcaffe_stock_management/login">{t('header.login')}</Item>
-      <Item to="/arcaffe_stock_management/summary">{t('header.summary')}</Item>
+      <Item to="/">{t('header.home')}</Item>
+      <Item to="/login">{t('header.login')}</Item>
+      <Item to="/summary">{t('header.summary')}</Item>
     </ul>
   );
 };

@@ -24,11 +24,7 @@ const Header = (): JSX.Element => {
       <div className="container">
         <div className="header-logo-and-theme">
           {!isTablet && <MobileNav onClick={handleNavToggle} />}
-          <Link
-            className="logo navbar-link"
-            to="/arcaffe_stock_management"
-            aria-label="Home"
-          >
+          <Link className="logo navbar-link" to="/" aria-label="Home">
             <img src={Logo} alt="Arcaffe logo" />
           </Link>
         </div>
