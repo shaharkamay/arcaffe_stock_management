@@ -1,14 +1,15 @@
 import ItemModel from '../models/item';
+import { Item } from '../types';
 
 const getAllItems = async () => {
   console.log('get all items service');
-  const items = [] as [];
+  const items = await ItemModel.find({});
   return items;
 };
 
-const addItem = async () => {
+const addItem = async (item: Item) => {
   console.log('add item service');
-  const newItem = {};
+  const newItem = await ItemModel.create(item);
   return newItem;
 };
 
