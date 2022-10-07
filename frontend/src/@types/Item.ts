@@ -1,5 +1,5 @@
 export type ItemI = {
-  id?: string,
+  id: string,
   name: string;
   amount: number;
   amountNeeded: number;

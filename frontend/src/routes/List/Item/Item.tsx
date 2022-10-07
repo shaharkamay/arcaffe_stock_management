@@ -1,17 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useRef } from 'react';
 import { Button } from '../../../components';
 import { ItemI } from '../../../@types';
 import { useLongPress } from '../../../hooks';
 import styled, { css } from 'styled-components';
-import { useDrag, useDrop } from 'react-dnd';
-import {
-  setItemKeyValue,
-  updateAllItemsAmount,
-  updateItemAmount,
-  updateLocalStockList,
-} from '../../../utils';
 import checkMarkSvg from '../../../assets/images/check_circle.svg';
+import { useItemsMutations } from '../queries';
 
 const Wrapper = styled.div<{ selected: boolean }>`
   display: flex;
@@ -28,7 +21,7 @@ const Wrapper = styled.div<{ selected: boolean }>`
   &::after {
     position: absolute;
     margin: 0 auto;
-    bottom: 0;
+    top: 0;
     content: '';
     width: calc(100% - 1.4rem);
     height: 1px;
@@ -108,101 +101,14 @@ const ItemAmountNeeded = styled(ItemAmount)`
 
 const Item = ({
   item,
-  index,
   onItemClick,
-  selectedItems,
-  setSelectedItems,
-  stockList,
-  setStockList,
-  moveItem,
+  selectedItemsIds
 }: {
   item: ItemI;
-  index: number;
   onItemClick: (e: React.TouchEvent<HTMLElement>, item: ItemI) => void;
-  selectedItems: ItemI[];
-  setSelectedItems: React.Dispatch<React.SetStateAction<ItemI[]>>;
-  stockList: ItemI[];
-  setStockList: React.Dispatch<React.SetStateAction<ItemI[]>>;
-  moveItem: ({
-    fromIndex,
-    toIndex,
-  }: {
-    fromIndex: number;
-    toIndex: number;
-  }) => void;
+  selectedItemsIds: string[];
 }): JSX.Element => {
-  const ref = useRef<HTMLInputElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const [{ handlerId }, drop] = useDrop({
-    accept: 'item',
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    hover(item, monitor) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = (item as { index: number }).index;
-      const hoverIndex = index;
-      // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-      // Determine rectangle on screen
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // Get vertical middle
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
-      // Get pixels to the top
-      const hoverClientY =
-        (clientOffset as { y: number }).y - hoverBoundingRect.top;
-      // Only perform the move when the mouse has crossed half of the items height
-      // When dragging downwards, only move when the cursor is below 50%
-      // When dragging upwards, only move when the cursor is above 50%
-      // Dragging downwards
-
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-      // Time to actually perform the action
-      moveItem({
-        fromIndex: dragIndex,
-        toIndex: hoverIndex,
-      });
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      (item as { index: number }).index = hoverIndex;
-    },
-  });
-
-  const [{ isDragging }, dragRef] = useDrag({
-    type: 'item',
-    item: () => {
-      return { id: item.name, index, text: item.name };
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-    isDragging: (monitor) => {
-      return monitor.getItem().id === item.name;
-    },
-  });
-
-  const opacity = isDragging ? 0.5 : 1;
+  const {updateItemMutation} = useItemsMutations();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -217,16 +123,16 @@ const Item = ({
       return;
     }
 
-    for (let j = 0; j < selectedItems.length; j++) {
-      const selectedName = selectedItems[j].name;
-      if (selectedName !== item.name) {
+    for (let j = 0; j < selectedItemsIds.length; j++) {
+      const id = selectedItemsIds[j];
+      if (id !== item.id) {
         doesExistInSelectedItems = true;
       }
     }
     if (doesExistInSelectedItems) {
       if ((e.target as HTMLTextAreaElement).tagName === 'BUTTON') return;
     }
-    if (selectedItems.length > 0) {
+    if (selectedItemsIds.length > 0) {
       onItemClick(e, item);
     }
   };
@@ -235,6 +141,7 @@ const Item = ({
     shouldPreventDefault: true,
     delay: 500,
   };
+  
   const { onMouseDown, onTouchStart, onMouseUp, onMouseLeave, onTouchEnd } =
     useLongPress(
       onLongPress,
@@ -247,30 +154,18 @@ const Item = ({
 
   const alterItemAmount = (amount: number) => {
     let doesExistInSelectedItems = false;
-    for (let j = 0; j < selectedItems.length; j++) {
-      const selectedName = selectedItems[j].name;
-      if (selectedName === item.name) {
+    selectedItemsIds.forEach(id => {
+      if(id === item.id)
         doesExistInSelectedItems = true;
-      }
-    }
-    let updatedStockList: ItemI[] = [];
-    if (!doesExistInSelectedItems) {
-      updatedStockList = updateItemAmount(stockList, item, amount);
-    } else {
-      const updatedSelectedItems = updateAllItemsAmount(selectedItems, amount);
-      setSelectedItems(updatedSelectedItems);
+    });
 
-      updatedStockList = [...stockList];
-      for (let j = 0; j < stockList.length; j++) {
-        for (let k = 0; k < updatedSelectedItems.length; k++) {
-          if (stockList[j].name === updatedSelectedItems[k].name) {
-            updatedStockList[j].amount = updatedSelectedItems[k].amount;
-          }
-        }
-      }
+    if (!doesExistInSelectedItems) 
+      updateItemMutation.mutate({...item, amount: item.amount + amount});
+    else {
+      selectedItemsIds.forEach(() => {
+        // updateItemMutation.mutate({id, amount: selectedItem.amount + amount});
+      });
     }
-    updateLocalStockList(updatedStockList);
-    setStockList(updatedStockList);
   };
 
   const setItemAmount = (e: React.FocusEvent) => {
@@ -279,11 +174,8 @@ const Item = ({
       Number((e.target as HTMLTextAreaElement).value) < 0
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
-    const updatedStockList = setItemKeyValue(stockList, item, amount, 'amount');
-    setStockList(() => {
-      updateLocalStockList(updatedStockList);
-      return [...updatedStockList];
-    });
+      
+    updateItemMutation.mutate({...item, amount});
     (e.target as HTMLTextAreaElement).value = '';
   };
 
@@ -293,16 +185,8 @@ const Item = ({
       Number((e.target as HTMLTextAreaElement).value) < 0
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
-    const updatedStockList = setItemKeyValue(
-      stockList,
-      item,
-      amountNeeded,
-      'amountNeeded'
-    );
-    setStockList(() => {
-      updateLocalStockList(updatedStockList);
-      return [...updatedStockList];
-    });
+
+    updateItemMutation.mutate({...item, amountNeeded});
     (e.target as HTMLTextAreaElement).value = '';
   };
 
@@ -310,71 +194,58 @@ const Item = ({
     inputRef.current.value = '';
   }
 
-  const dropRef = drop(ref) as React.Ref<HTMLDivElement>;
-
-  const selected = selectedItems.filter((i) => i.name === item.name).length > 0;
+  const selected = selectedItemsIds.filter((id) => id === item.id).length > 0;
 
   return (
-    <div ref={dropRef}>
-      {isMounted &&
-        createPortal(
-          <Wrapper
-            ref={dragRef}
-            style={{ opacity }}
-            selected={selected}
-            {...{
-              onMouseDown,
-              onTouchStart,
-              onMouseUp,
-              onMouseLeave,
-              onTouchEnd,
-            }}
-            data-handler-id={handlerId}
-          >
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                alterItemAmount(-1);
-              }}
-              dir="ltr"
-            >
-              -
-            </Button>
-            <ItemName>
-              {item.name}
-              {selected && <Check src={checkMarkSvg} />}
-            </ItemName>
-            <AmountWrapper>
-              <ItemAmount
-                type="text"
-                onBlur={setItemAmount}
-                disabled={Boolean(selectedItems.length)}
-                placeholder={item.amount?.toString()}
-                belowAmountNeeded={item.amount < item.amountNeeded}
-                ref={inputRef}
-              />
-              <ItemAmountNeeded
-                type="text"
-                onBlur={setItemAmountNeeded}
-                disabled={Boolean(selectedItems.length)}
-                placeholder={item.amountNeeded.toString()}
-                ref={inputRef}
-              />
-            </AmountWrapper>
+    <Wrapper
+      selected={selected}
+      {...{
+        onMouseDown,
+        onTouchStart,
+        onMouseUp,
+        onMouseLeave,
+        onTouchEnd,
+      }}
+    >
+      <Button
+        onClick={(e) => {
+          e.stopPropagation();
+          alterItemAmount(-1);
+        }}
+      >
+        -
+      </Button>
+      <ItemName>
+        {item.name}
+        {selected && <Check src={checkMarkSvg} />}
+      </ItemName>
+      <AmountWrapper>
+        <ItemAmount
+          type="text"
+          onBlur={setItemAmount}
+          disabled={Boolean(selectedItemsIds.length)}
+          placeholder={item.amount.toString()}
+          belowAmountNeeded={item.amount < item.amountNeeded}
+          ref={inputRef}
+        />
+        <ItemAmountNeeded
+          type="text"
+          onBlur={setItemAmountNeeded}
+          disabled={Boolean(selectedItemsIds.length)}
+          placeholder={item.amountNeeded.toString()}
+          ref={inputRef}
+        />
+      </AmountWrapper>
 
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                alterItemAmount(1);
-              }}
-              dir="ltr"
-            >
-              +
-            </Button>
-          </Wrapper>,
-          (dropRef as unknown as { current: HTMLElement })?.current
-        )}
-    </div>
+      <Button
+        onClick={(e) => {
+          e.stopPropagation();
+          alterItemAmount(1);
+        }}
+      >
+        +
+      </Button>
+    </Wrapper>
   );
 };
 

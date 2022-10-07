@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Item from './Item/Item';
 import { ItemI } from '../../@types';
 import AddItem from './AddItem';
@@ -12,81 +12,39 @@ const Wrapper = styled.div`
 `;
 
 const List = () => {
-  const localStockList: string = localStorage.getItem('stockList') || '[]';
-  const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
-  const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
+  const {data} = useItemsQuery();
+  const stockList = data?.data as ItemI[] | undefined;
 
-  const {data, isFetched} = useItemsQuery();
   const {deleteItemMutation} = useItemsMutations();
 
-  useEffect(() => {
-    if(isFetched) {
-      setStockList((data as unknown as {data: ItemI[]})?.data || []);
-    }
-  }, [data]);
-
-  const [selectedItems, setSelectedItems] = useState<ItemI[]>([]);
+  const [selectedItemsIds, setSelectedItemsIds] = useState<string[]>([]);
   const onItemClick = (e: React.TouchEvent<HTMLElement>, item: ItemI) => {
-    if (selectedItems.find((i) => i.name === item.name)) {
+    if (selectedItemsIds.find((id) => id === item.id)) {
       if ((e.target as HTMLTextAreaElement).tagName === 'BUTTON') return;
-      setSelectedItems(selectedItems.filter((i) => i.name !== item.name));
+      setSelectedItemsIds(selectedItemsIds.filter((id) => id !== item.id));
       return;
     }
-    setSelectedItems((prev) => [...prev, item]);
+    setSelectedItemsIds((prev) => [...prev, item.id]);
   };
 
   const removeSelectedItems = () => {
-    const updatedStockList = stockList.filter((item) => {
-      for (let j = 0; j < selectedItems.length; j++) {
-        if (selectedItems[j].name === item.name) {
-          deleteItemMutation.mutate({id: item.id || ''});
-          setSelectedItems((prev) => [
-            ...prev.filter((i) => i.name !== item.name),
-          ]);
-          return false;
-        }
-      }
-      return true;
-    });
-    localStorage.setItem('stockList', JSON.stringify(updatedStockList));
-    setStockList(updatedStockList);
-  };
-
-  const moveItem = ({
-    fromIndex,
-    toIndex,
-  }: {
-    fromIndex: number;
-    toIndex: number;
-  }) => {
-    setStockList((prevStockList) => {
-      const tempStockList = [...prevStockList];
-      const item = tempStockList.splice(fromIndex, 1)[0];
-      tempStockList.splice(toIndex, 0, item);
-      localStorage.setItem('stockList', JSON.stringify(tempStockList));
-      return tempStockList;
-    });
+    selectedItemsIds.forEach(id => deleteItemMutation.mutate({id}));
   };
 
   return (
     <Wrapper className="list">
       {/* rendering the edit bar if items have been selected */}
-      {selectedItems.length ? <EditModeBar {...{selectedItems, setSelectedItems, removeSelectedItems}} /> : null}
-      {stockList.map((item, i) => (
+      {selectedItemsIds.length ? <EditModeBar {...{selectedItemsIds, setSelectedItemsIds, removeSelectedItems}} /> : null}
+      {stockList?.map((item, i) => (
         <Item
           key={i}
-          index={i}
-          stockList={stockList}
-          setStockList={setStockList}
           item={item}
           onItemClick={onItemClick}
-          selectedItems={selectedItems}
-          setSelectedItems={setSelectedItems}
-          moveItem={moveItem}
+          selectedItemsIds={selectedItemsIds}
         />
       ))}
-      {selectedItems.length <= 0 && (
-        <AddItem stockList={stockList} setStockList={setStockList} />
+      {selectedItemsIds.length <= 0 && (
+        <AddItem />
       )}
     </Wrapper>
   );
