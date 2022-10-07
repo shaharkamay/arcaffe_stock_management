@@ -6,7 +6,6 @@ function Theme() {
   const { setTheme } = useContext(ThemeContext);
   return (
     <div className="theme">
-      <label id="theme-icon" className="theme-icon"></label>
       {theme === 'theme-light' ||
       (!theme && window.matchMedia('(prefers-color-scheme: light)').matches) ? (
         <button

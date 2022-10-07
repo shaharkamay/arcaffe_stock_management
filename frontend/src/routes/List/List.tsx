@@ -2,25 +2,12 @@ import React, { useState } from 'react';
 import Item from './Item/Item';
 import { ItemI } from '../../@types';
 import AddItem from './AddItem';
-import { Button } from '../../components';
 import styled from 'styled-components';
+import EditModeBar from '../../components/EditModeBar/EditModeBar';
 
 const Wrapper = styled.div`
   --li-margin: 1rem;
   text-align: center;
-`;
-
-const RemoveButton = styled(Button)`
-  padding: 1rem;
-  border: none;
-  border-radius: 0.4rem;
-  background-color: var(--clr-secondary);
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  width: 90%;
-  margin: 1rem 0;
-  background-color: darkred;
 `;
 
 const List = () => {
@@ -38,7 +25,7 @@ const List = () => {
     setSelectedItems((prev) => [...prev, item]);
   };
 
-  const removeSelectedItem = () => {
+  const removeSelectedItems = () => {
     const updatedStockList = stockList.filter((item) => {
       for (let j = 0; j < selectedItems.length; j++) {
         if (selectedItems[j].name === item.name) {
@@ -72,6 +59,8 @@ const List = () => {
 
   return (
     <Wrapper className="list">
+      {/* rendering the edit bar if items have been selected */}
+      {selectedItems.length ? <EditModeBar {...{selectedItems, setSelectedItems, removeSelectedItems}} /> : null}
       {stockList.map((item, i) => (
         <Item
           key={i}
@@ -87,9 +76,6 @@ const List = () => {
       ))}
       {selectedItems.length <= 0 && (
         <AddItem stockList={stockList} setStockList={setStockList} />
-      )}
-      {selectedItems.length > 0 && (
-        <RemoveButton onClick={() => removeSelectedItem()}>Remove</RemoveButton>
       )}
     </Wrapper>
   );
