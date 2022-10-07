@@ -4,7 +4,7 @@ import { ItemI } from '../../@types';
 import AddItem from './AddItem';
 import { Button } from '../../components';
 import styled from 'styled-components';
-import { useItemsQuery } from './queries';
+import { useItemsMutations, useItemsQuery } from './queries';
 
 const Wrapper = styled.div`
   --li-margin: 1rem;
@@ -30,6 +30,7 @@ const List = () => {
   const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
 
   const {data, isFetched} = useItemsQuery();
+  const {deleteItemMutation} = useItemsMutations();
 
   useEffect(() => {
     if(isFetched) {
@@ -51,6 +52,7 @@ const List = () => {
     const updatedStockList = stockList.filter((item) => {
       for (let j = 0; j < selectedItems.length; j++) {
         if (selectedItems[j].name === item.name) {
+          deleteItemMutation.mutate({id: item.id || ''});
           setSelectedItems((prev) => [
             ...prev.filter((i) => i.name !== item.name),
           ]);

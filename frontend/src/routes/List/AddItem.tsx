@@ -3,6 +3,7 @@ import { Button as ButtonOrigin } from '../../components';
 import { ItemI } from '../../@types';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useItemsMutations } from './queries';
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,10 +44,18 @@ const AddItem = ({
 }): JSX.Element => {
   const { t } = useTranslation();
 
+  const {addItemMutation} = useItemsMutations();
+
   const [itemName, setItemName] = useState<string>('');
 
   const addItemToList = () => {
     if (!itemName) return;
+    addItemMutation.mutate({
+      name: itemName,
+      amount: 1,
+      amountNeeded: 1,
+    });
+    
     if (stockList.find((i) => i.name === itemName)) return;
 
     const newItem: ItemI = {
