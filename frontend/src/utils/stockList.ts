@@ -29,7 +29,7 @@ export const setItemKeyValue = (
   return updatedStockList;
 };
 
-export const updateItemCount = (
+export const updateItemAmount = (
   stockList: ItemI[],
   item: ItemI,
   amountToAdd: number
@@ -38,7 +38,7 @@ export const updateItemCount = (
     if (i.name === item.name) {
       return {
         ...item,
-        count: item.count + amountToAdd < 0 ? 0 : item.count + amountToAdd,
+        amount: item.amount + amountToAdd < 0 ? 0 : item.amount + amountToAdd,
       };
     }
     return i;
@@ -47,14 +47,14 @@ export const updateItemCount = (
   return updatedStockList;
 };
 
-export const updateAllItemsCount = (
+export const updateAllItemsAmount = (
   stockList: ItemI[],
   amountToAdd: number
 ) => {
   const updatedStockList = stockList.map((i) => {
     return {
       ...i,
-      count: i.count + amountToAdd < 0 ? 0 : i.count + amountToAdd,
+      amount: i.amount + amountToAdd < 0 ? 0 : i.amount + amountToAdd,
     };
   });
 

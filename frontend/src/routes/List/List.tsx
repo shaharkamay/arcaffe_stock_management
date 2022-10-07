@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Item from './Item/Item';
 import { ItemI } from '../../@types';
 import AddItem from './AddItem';
 import { Button } from '../../components';
 import styled from 'styled-components';
+import { useItemsQuery } from './queries';
 
 const Wrapper = styled.div`
   --li-margin: 1rem;
@@ -27,6 +28,14 @@ const List = () => {
   const localStockList: string = localStorage.getItem('stockList') || '[]';
   const parsedStockList: ItemI[] = JSON.parse(localStockList) as ItemI[];
   const [stockList, setStockList] = useState<ItemI[]>(parsedStockList);
+
+  const {data, isFetched} = useItemsQuery();
+
+  useEffect(() => {
+    if(isFetched) {
+      setStockList((data as unknown as {data: ItemI[]})?.data || []);
+    }
+  }, [data]);
 
   const [selectedItems, setSelectedItems] = useState<ItemI[]>([]);
   const onItemClick = (e: React.TouchEvent<HTMLElement>, item: ItemI) => {

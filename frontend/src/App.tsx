@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 const App = (): JSX.Element => {
   const { i18n } = useTranslation();
   const lang = i18n.language;
@@ -41,13 +44,15 @@ const App = (): JSX.Element => {
 
   return (
     <Theme.Provider value={{ theme, setTheme }}>
-      <div
-        className={`app ${theme}`}
-        lang={lang}
-        dir={lang === 'he' ? 'rtl' : 'ltr'}
-      >
-        <RouterProvider router={router} />
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <div
+          className={`app ${theme}`}
+          lang={lang}
+          dir={lang === 'he' ? 'rtl' : 'ltr'}
+        >
+          <RouterProvider router={router} />
+        </div>
+      </QueryClientProvider>
     </Theme.Provider>
   );
 };

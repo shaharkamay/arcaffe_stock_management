@@ -54,13 +54,13 @@ const Summary = () => {
         <tbody>
           {stockList.map((item) => {
             const amountToOrder =
-              item.amountNeeded - item.count < 0
+              item.amountNeeded - item.amount < 0
                 ? 0
-                : item.amountNeeded - item.count;
+                : item.amountNeeded - item.amount;
             return (
               <Tr key={item.name}>
                 <Td>{item.name}</Td>
-                <Td>{item.count}</Td>
+                <Td>{item.amount}</Td>
                 <Td>{item.amountNeeded}</Td>
                 <Td>{amountToOrder}</Td>
               </Tr>

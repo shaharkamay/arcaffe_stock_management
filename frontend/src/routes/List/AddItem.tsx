@@ -51,7 +51,7 @@ const AddItem = ({
 
     const newItem: ItemI = {
       name: itemName,
-      count: 1,
+      amount: 1,
       amountNeeded: 1,
     };
     setStockList((prevStockList: ItemI[]) => {
