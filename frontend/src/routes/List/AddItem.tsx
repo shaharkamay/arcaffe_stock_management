@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { useItemsMutations } from './queries';
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   width: 90%;
   gap: 0.5rem;
@@ -80,8 +80,9 @@ const AddItem = ({
         }}
         value={itemName}
         placeholder={t('item.addNewItem')}
+        
       />
-      <Button onClick={addItemToList}>{t('item.add')}</Button>
+      <Button type='submit' onClick={addItemToList}>{t('item.add')}</Button>
     </Wrapper>
   );
 };

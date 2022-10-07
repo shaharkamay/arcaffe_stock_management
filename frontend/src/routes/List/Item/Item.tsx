@@ -28,7 +28,7 @@ const Wrapper = styled.div<{ selected: boolean }>`
   &::after {
     position: absolute;
     margin: 0 auto;
-    top: 0;
+    bottom: 0;
     content: '';
     width: calc(100% - 1.4rem);
     height: 1px;

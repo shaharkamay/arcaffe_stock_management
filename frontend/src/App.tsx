@@ -38,6 +38,15 @@ const App = (): JSX.Element => {
   const { i18n } = useTranslation();
   const lang = i18n.language;
 
+  const localLang = localStorage.getItem('language');
+  if(localLang) {
+    if(i18n.language !== localLang)
+    {
+      void i18n.changeLanguage(localLang);
+    }
+    
+  }
+
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'theme-auto'
   );

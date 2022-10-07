@@ -36,6 +36,7 @@ const Footer = (): JSX.Element => {
             className="lng-button"
             onClick={() => {
               changeLanguage('en');
+              localStorage.setItem('language', 'en');
             }}
           >
             <span className="lng-button-text">EN</span>
@@ -45,6 +46,7 @@ const Footer = (): JSX.Element => {
             className="lng-button"
             onClick={() => {
               changeLanguage('he');
+              localStorage.setItem('language', 'he');
             }}
           >
             <span className="lng-button-text">HE</span>
