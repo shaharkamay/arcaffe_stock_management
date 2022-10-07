@@ -13,13 +13,13 @@
     --clr-cream-lighter: #EEE3CB;
     --clr-sky: #a4b0ba;
     --clr-sky-lighter: #B7C4CF;
-    
+
     --inverted-constant: invert(1) hue-rotate(180deg);
 
     /* FONT */
     --font-text: 'Roboto', Narkisim;
     --font-title: 'Bebas Neue', cursive, Narkisim;
-    
+
     /* CORE AGGREGATORS */
     --foreground: var(--clr-dark);
     --background: var(--clr-light);
@@ -34,7 +34,6 @@
     --link-clr: #0000ee;
     --visited-clr: #551a8b;
     --inverted: none;
-    --theme-icon: '☀';
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,7 +53,6 @@
         --link-clr: #8ab4f8;
         --visited-clr: #c58af9;
         --inverted: invert(1) hue-rotate(180deg);
-        --theme-icon: "🌛︎";
     }
 }
 
@@ -74,7 +72,6 @@
     --link-clr: #8ab4f8;
     --visited-clr: #c58af9;
     --inverted: invert(1) hue-rotate(180deg);
-    --theme-icon: "🌛︎";
 }
 
 .app {
@@ -126,7 +123,7 @@ textarea,
 button,
 select,
 a {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 main {
@@ -140,8 +137,6 @@ main {
     max-width: 1200px;
 }
 
-@media (min-width:700px) {
-}
+@media (min-width:700px) {}
 
-@media (min-width: 1000px) {
-}
+@media (min-width: 1000px) {}

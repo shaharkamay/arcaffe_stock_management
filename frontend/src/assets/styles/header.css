@@ -1,10 +1,8 @@
 header {
   background: var(--clr-primary);
-  background-image: linear-gradient(
-    to right,
-    var(--clr-primary),
-    var(--clr-secondary) 130%
-  );
+  background-image: linear-gradient(to right,
+      var(--clr-primary),
+      var(--clr-secondary) 130%);
   padding: 0.5em 0;
   font-family: var(--font-title);
   font-size: 1.5rem;
@@ -12,16 +10,16 @@ header {
 }
 
 .header-logo-and-theme {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-    width: 5rem;
+  width: 5rem;
 }
 
 .logo img {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .navbar-list {
@@ -29,8 +27,8 @@ header {
 }
 
 .navbar-link {
-    text-decoration: none;
-    color: var(--clr-light);
+  text-decoration: none;
+  color: var(--clr-light);
 }
 
 .mobile-nav {
@@ -90,8 +88,6 @@ header {
   fill: var(--clr-light);
 }
 
-@media (min-width: 700px) {
-}
+@media (min-width: 700px) {}
 
-@media (min-width: 1000px) {
-}
+@media (min-width: 1000px) {}
