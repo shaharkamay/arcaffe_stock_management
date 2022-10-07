@@ -1,5 +1,6 @@
 export type ItemI = {
+  id?: string,
   name: string;
-  count: number;
+  amount: number;
   amountNeeded: number;
 };

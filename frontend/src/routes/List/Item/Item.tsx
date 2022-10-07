@@ -7,8 +7,8 @@ import styled, { css } from 'styled-components';
 import { useDrag, useDrop } from 'react-dnd';
 import {
   setItemKeyValue,
-  updateAllItemsCount,
-  updateItemCount,
+  updateAllItemsAmount,
+  updateItemAmount,
   updateLocalStockList,
 } from '../../../utils';
 import checkMarkSvg from '../../../assets/images/check_circle.svg';
@@ -58,13 +58,13 @@ const Check = styled.img`
   height: 1.2rem;
 `;
 
-const CountWrapper = styled.div`
+const AmountWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 `;
 
-const ItemCount = styled.input<{ belowAmountNeeded?: boolean }>`
+const ItemAmount = styled.input<{ belowAmountNeeded?: boolean }>`
   display: inline-flex;
   text-align: center;
   align-items: center;
@@ -92,7 +92,7 @@ const ItemCount = styled.input<{ belowAmountNeeded?: boolean }>`
   }
 `;
 
-const ItemAmountNeeded = styled(ItemCount)`
+const ItemAmountNeeded = styled(ItemAmount)`
   background-color: var(--clr-primary);
   color: var(--clr-light);
   border-width: 3px;
@@ -245,7 +245,7 @@ const Item = ({
       HTMLDivElement
     >;
 
-  const alterItemCount = (amount: number) => {
+  const alterItemAmount = (amount: number) => {
     let doesExistInSelectedItems = false;
     for (let j = 0; j < selectedItems.length; j++) {
       const selectedName = selectedItems[j].name;
@@ -255,16 +255,16 @@ const Item = ({
     }
     let updatedStockList: ItemI[] = [];
     if (!doesExistInSelectedItems) {
-      updatedStockList = updateItemCount(stockList, item, amount);
+      updatedStockList = updateItemAmount(stockList, item, amount);
     } else {
-      const updatedSelectedItems = updateAllItemsCount(selectedItems, amount);
+      const updatedSelectedItems = updateAllItemsAmount(selectedItems, amount);
       setSelectedItems(updatedSelectedItems);
 
       updatedStockList = [...stockList];
       for (let j = 0; j < stockList.length; j++) {
         for (let k = 0; k < updatedSelectedItems.length; k++) {
           if (stockList[j].name === updatedSelectedItems[k].name) {
-            updatedStockList[j].count = updatedSelectedItems[k].count;
+            updatedStockList[j].amount = updatedSelectedItems[k].amount;
           }
         }
       }
@@ -273,13 +273,13 @@ const Item = ({
     setStockList(updatedStockList);
   };
 
-  const setItemCount = (e: React.FocusEvent) => {
+  const setItemAmount = (e: React.FocusEvent) => {
     if ((e.target as HTMLTextAreaElement).value === '') return;
-    const count =
+    const amount =
       Number((e.target as HTMLTextAreaElement).value) < 0
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
-    const updatedStockList = setItemKeyValue(stockList, item, count, 'count');
+    const updatedStockList = setItemKeyValue(stockList, item, amount, 'amount');
     setStockList(() => {
       updateLocalStockList(updatedStockList);
       return [...updatedStockList];
@@ -334,7 +334,7 @@ const Item = ({
             <Button
               onClick={(e) => {
                 e.stopPropagation();
-                alterItemCount(-1);
+                alterItemAmount(-1);
               }}
               dir="ltr"
             >
@@ -344,13 +344,13 @@ const Item = ({
               {item.name}
               {selected && <Check src={checkMarkSvg} />}
             </ItemName>
-            <CountWrapper>
-              <ItemCount
+            <AmountWrapper>
+              <ItemAmount
                 type="text"
-                onBlur={setItemCount}
+                onBlur={setItemAmount}
                 disabled={Boolean(selectedItems.length)}
-                placeholder={item.count.toString()}
-                belowAmountNeeded={item.count < item.amountNeeded}
+                placeholder={item.amount?.toString()}
+                belowAmountNeeded={item.amount < item.amountNeeded}
                 ref={inputRef}
               />
               <ItemAmountNeeded
@@ -360,12 +360,12 @@ const Item = ({
                 placeholder={item.amountNeeded.toString()}
                 ref={inputRef}
               />
-            </CountWrapper>
+            </AmountWrapper>
 
             <Button
               onClick={(e) => {
                 e.stopPropagation();
-                alterItemCount(1);
+                alterItemAmount(1);
               }}
               dir="ltr"
             >
