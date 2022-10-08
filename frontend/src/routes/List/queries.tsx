@@ -20,10 +20,14 @@ export const useItemsMutations = () => {
   const updateItemMutation = useMutation(api.updateItem, {
     onSuccess
   });
+  
+  const updateItemsMutation = useMutation(api.updateItems, {
+    onSuccess
+  });
 
   const deleteItemMutation = useMutation(api.deleteItem, {
     onSuccess
   });
 
-	return {addItemMutation, updateItemMutation, deleteItemMutation};
+	return {addItemMutation, updateItemMutation, updateItemsMutation, deleteItemMutation};
 };

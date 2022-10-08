@@ -1,3 +1,4 @@
+import { UpdateWithAggregationPipeline } from 'mongoose';
 import ItemModel from '../models/item';
 import { Item } from '../types';
 
@@ -16,6 +17,11 @@ const updateItem = async (itemId: string, item: Item) => {
   return updatedItem;
 }
 
+const updateItems = async (itemIds: string[], update: UpdateWithAggregationPipeline) => {
+  const updatedItems = await ItemModel.updateMany({_id: { $in: itemIds }}, update);
+  return updatedItems.modifiedCount;
+}
+
 const deleteItem = async (itemId: string) => {
   await ItemModel.findByIdAndDelete(itemId);
 }
@@ -24,5 +30,6 @@ export default {
   addItem,
   getAllItems,
   updateItem,
+  updateItems,
   deleteItem,
 };
