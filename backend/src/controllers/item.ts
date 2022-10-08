@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { UpdateWithAggregationPipeline } from 'mongoose';
 import { itemService } from '../services';
 import { Item } from '../types';
 
@@ -32,6 +33,17 @@ const updateItem = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const updateItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const itemIds = req.body.itemIds as string[];
+    const update = req.body.update as UpdateWithAggregationPipeline;
+    await itemService.updateItems(itemIds, update);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
+
 const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.itemId as string;
@@ -42,4 +54,4 @@ const deleteItem = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getAllItems, addItem, updateItem, deleteItem };
+export default { getAllItems, addItem, updateItem, updateItems, deleteItem };

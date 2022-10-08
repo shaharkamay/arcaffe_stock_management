@@ -5,6 +5,7 @@ import { useLongPress } from '../../../hooks';
 import styled, { css } from 'styled-components';
 import checkMarkSvg from '../../../assets/images/check_circle.svg';
 import { useItemsMutations } from '../queries';
+import { UpdateWithAggregationPipeline } from 'mongoose';
 
 const Wrapper = styled.div<{ selected: boolean }>`
   display: flex;
@@ -102,13 +103,13 @@ const ItemAmountNeeded = styled(ItemAmount)`
 const Item = ({
   item,
   onItemClick,
-  selectedItemsIds
+  selectedItemsIds,
 }: {
   item: ItemI;
   onItemClick: (e: React.TouchEvent<HTMLElement>, item: ItemI) => void;
   selectedItemsIds: string[];
 }): JSX.Element => {
-  const {updateItemMutation} = useItemsMutations();
+  const { updateItemMutation, updateItemsMutation } = useItemsMutations();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -141,7 +142,7 @@ const Item = ({
     shouldPreventDefault: true,
     delay: 500,
   };
-  
+
   const { onMouseDown, onTouchStart, onMouseUp, onMouseLeave, onTouchEnd } =
     useLongPress(
       onLongPress,
@@ -154,16 +155,17 @@ const Item = ({
 
   const alterItemAmount = (amount: number) => {
     let doesExistInSelectedItems = false;
-    selectedItemsIds.forEach(id => {
-      if(id === item.id)
-        doesExistInSelectedItems = true;
+    selectedItemsIds.forEach((id) => {
+      if (id === item.id) doesExistInSelectedItems = true;
     });
 
-    if (!doesExistInSelectedItems) 
-      updateItemMutation.mutate({...item, amount: item.amount + amount});
+    if (!doesExistInSelectedItems)
+      updateItemMutation.mutate({ ...item, amount: item.amount + amount });
     else {
-      selectedItemsIds.forEach(() => {
-        // updateItemMutation.mutate({id, amount: selectedItem.amount + amount});
+      const update = ({ $inc: { amount } }) as unknown as UpdateWithAggregationPipeline;
+      updateItemsMutation.mutate({
+        itemIds: selectedItemsIds,
+        update,
       });
     }
   };
@@ -174,8 +176,8 @@ const Item = ({
       Number((e.target as HTMLTextAreaElement).value) < 0
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
-      
-    updateItemMutation.mutate({...item, amount});
+
+    updateItemMutation.mutate({ ...item, amount });
     (e.target as HTMLTextAreaElement).value = '';
   };
 
@@ -186,7 +188,7 @@ const Item = ({
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
 
-    updateItemMutation.mutate({...item, amountNeeded});
+    updateItemMutation.mutate({ ...item, amountNeeded });
     (e.target as HTMLTextAreaElement).value = '';
   };
 

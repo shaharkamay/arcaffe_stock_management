@@ -9,6 +9,8 @@ itemsRouter.get('/', itemController.getAllItems);
 
 itemsRouter.put('/:itemId', itemController.updateItem);
 
+itemsRouter.put('/', itemController.updateItems);
+
 itemsRouter.delete('/:itemId', itemController.deleteItem);
 
 export default itemsRouter;
