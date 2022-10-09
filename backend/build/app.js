@@ -12,7 +12,7 @@ const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
-app.use(express_1.default.static('../app/frontend/build'));
+app.use(express_1.default.static('./frontend/build'));
 app.get('/', controllers_1.appController.render);
 app.get('/summary', controllers_1.appController.render);
 app.use('/api', api_1.default);
