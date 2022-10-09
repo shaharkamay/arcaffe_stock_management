@@ -8,7 +8,7 @@ const path_1 = __importDefault(require("path"));
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const render = (req, res, next) => {
     try {
-        res.sendFile(path_1.default.resolve('../frontend/build/index.html'));
+        res.sendFile(path_1.default.resolve('../app/frontend/build/index.html'));
     }
     catch (err) {
         next(err);
