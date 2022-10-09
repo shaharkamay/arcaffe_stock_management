@@ -14,4 +14,3 @@
 - typescript
 - react query
 - react context state management
-
