@@ -1,62 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,400;1,500&display=swap');
 
 :root {
-    /* CORE */
-    --clr-light: white;
-    --clr-light-gray: #F1ECE6;
-    --clr-dark: #121212;
-    --clr-dark-lighter: #272727;
-    --clr-brown: #704F4F;
-    --clr-brown-lighter: #967E76;
-    --clr-brown-darker: #472D2D;
-    --clr-cream: #D7C0AE;
-    --clr-cream-lighter: #EEE3CB;
-    --clr-sky: #a4b0ba;
-    --clr-sky-lighter: #B7C4CF;
+  /* CORE */
+  --clr-light: white;
+  --clr-light-gray: #f1ece6;
+  --clr-dark: #121212;
+  --clr-dark-lighter: #272727;
+  --clr-brown: #704f4f;
+  --clr-brown-lighter: #967e76;
+  --clr-brown-darker: #472d2d;
+  --clr-cream: #d7c0ae;
+  --clr-cream-lighter: #eee3cb;
+  --clr-sky: #a4b0ba;
+  --clr-sky-lighter: #b7c4cf;
 
-    --inverted-constant: invert(1) hue-rotate(180deg);
+  --inverted-constant: invert(1) hue-rotate(180deg);
 
-    /* FONT */
-    --font-text: 'Roboto', Narkisim;
-    --font-title: 'Bebas Neue', cursive, Narkisim;
+  /* FONT */
+  --font-text: 'Roboto', Narkisim;
+  --font-title: 'Bebas Neue', cursive, Narkisim;
 
-    /* CORE AGGREGATORS */
-    --foreground: var(--clr-dark);
-    --background: var(--clr-light);
-    --background-secondary: var(--clr-light-gray);
-    --foreground-secondary: var(--clr-primary);
-    --clr-primary: var(--clr-brown);
-    --clr-secondary: var(--clr-brown-lighter);
-    --clr-tertiary: var(--clr-cream);
-    --clr-quaternary: var(--clr-cream-lighter);
-    --clr-quinary: var(--clr-sky);
-    --clr-quinary-alternate: var(--clr-sky-lighter);
-    --link-clr: #0000ee;
-    --visited-clr: #551a8b;
-    --inverted: none;
+  /* CORE AGGREGATORS */
+  --foreground: var(--clr-dark);
+  --background: var(--clr-light);
+  --background-secondary: var(--clr-light-gray);
+  --foreground-secondary: var(--clr-primary);
+  --clr-primary: var(--clr-brown);
+  --clr-secondary: var(--clr-brown-lighter);
+  --clr-tertiary: var(--clr-cream);
+  --clr-quaternary: var(--clr-cream-lighter);
+  --clr-quinary: var(--clr-sky);
+  --clr-quinary-alternate: var(--clr-sky-lighter);
+  --link-clr: #0000ee;
+  --visited-clr: #551a8b;
+  --inverted: none;
 }
 
 @media (prefers-color-scheme: dark) {
-    .theme-auto {
-        --foreground: var(--clr-light);
-        --background: var(--clr-dark);
-        --background-secondary: var(--clr-dark-lighter);
-        --foreground-secondary: var(--clr-light-gray);
-        --clr-primary: var(--clr-brown-darker);
-        --clr-secondary: var(--clr-brown);
-        --clr-tertiary: var(--clr-cream);
-        --clr-quaternary: var(--clr-brown-lighter);
-        --clr-quinary: var(--clr-sky);
-        --clr-quinary-alternate: var(--clr-sky-lighter);
-        --link-clr: #0000ee;
-        --visited-clr: #551a8b;
-        --link-clr: #8ab4f8;
-        --visited-clr: #c58af9;
-        --inverted: invert(1) hue-rotate(180deg);
-    }
-}
-
-.theme-dark {
+  .theme-auto {
     --foreground: var(--clr-light);
     --background: var(--clr-dark);
     --background-secondary: var(--clr-dark-lighter);
@@ -72,19 +53,37 @@
     --link-clr: #8ab4f8;
     --visited-clr: #c58af9;
     --inverted: invert(1) hue-rotate(180deg);
+  }
+}
+
+.theme-dark {
+  --foreground: var(--clr-light);
+  --background: var(--clr-dark);
+  --background-secondary: var(--clr-dark-lighter);
+  --foreground-secondary: var(--clr-light-gray);
+  --clr-primary: var(--clr-brown-darker);
+  --clr-secondary: var(--clr-brown);
+  --clr-tertiary: var(--clr-cream);
+  --clr-quaternary: var(--clr-brown-lighter);
+  --clr-quinary: var(--clr-sky);
+  --clr-quinary-alternate: var(--clr-sky-lighter);
+  --link-clr: #0000ee;
+  --visited-clr: #551a8b;
+  --link-clr: #8ab4f8;
+  --visited-clr: #c58af9;
+  --inverted: invert(1) hue-rotate(180deg);
 }
 
 .app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
-
 
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body,
@@ -93,12 +92,12 @@ h2,
 h3,
 ul,
 p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: var(--font-text);
+  font-family: var(--font-text);
 }
 
 h1,
@@ -107,15 +106,15 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-title);
+  font-family: var(--font-title);
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 a {
-    color: var(--link-clr);
+  color: var(--link-clr);
 }
 
 input,
@@ -123,20 +122,61 @@ textarea,
 button,
 select,
 a {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 main {
-    flex: 1;
-    background-color: var(--background);
+  flex: 1;
+  background-color: var(--background);
 }
 
 .container {
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
 }
 
-@media (min-width:700px) {}
+.border-loading {
+  --angle: 0deg;
+  --border-width: 3px;
+  border: var(--border-width) solid transparent !important;
+  background-image: linear-gradient(
+      to right,
+      rgb(255 255 255 / 1),
+      rgb(255 255 255 / 1)
+    ),
+    conic-gradient(
+      from var(--angle),
+      #fff 0deg 90deg,
+      #fff 90deg 180deg,
+      #fff 180deg 270deg,
+      #377af5 270deg 360deg
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
 
-@media (min-width: 1000px) {}
+/* Animate when Houdini is available */
+@supports (background: paint(houdini)) {
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes rotate {
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  .border-loading {
+    animation: rotate 1s linear infinite;
+  }
+}
+
+@media (min-width: 700px) {
+}
+
+@media (min-width: 1000px) {
+}
