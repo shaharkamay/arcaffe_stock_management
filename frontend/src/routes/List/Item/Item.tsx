@@ -103,11 +103,11 @@ const ItemAmountNeeded = styled(ItemAmount)`
 const Item = ({
   item,
   onItemClick,
-  selectedItemsIds,
+  selectedItems,
 }: {
   item: ItemI;
   onItemClick: (e: React.TouchEvent<HTMLElement>, item: ItemI) => void;
-  selectedItemsIds: string[];
+  selectedItems: string[];
 }): JSX.Element => {
   const { updateItemMutation, updateItemsMutation } = useItemsMutations();
 
@@ -124,8 +124,8 @@ const Item = ({
       return;
     }
 
-    for (let j = 0; j < selectedItemsIds.length; j++) {
-      const id = selectedItemsIds[j];
+    for (let j = 0; j < selectedItems.length; j++) {
+      const id = selectedItems[j];
       if (id !== item.id) {
         doesExistInSelectedItems = true;
       }
@@ -133,7 +133,7 @@ const Item = ({
     if (doesExistInSelectedItems) {
       if ((e.target as HTMLTextAreaElement).tagName === 'BUTTON') return;
     }
-    if (selectedItemsIds.length > 0) {
+    if (selectedItems.length > 0) {
       onItemClick(e, item);
     }
   };
@@ -155,7 +155,7 @@ const Item = ({
 
   const alterItemAmount = (amount: number) => {
     let doesExistInSelectedItems = false;
-    selectedItemsIds.forEach((id) => {
+    selectedItems.forEach((id) => {
       if (id === item.id) doesExistInSelectedItems = true;
     });
 
@@ -164,7 +164,7 @@ const Item = ({
     else {
       const update = ({ $inc: { amount } }) as unknown as UpdateWithAggregationPipeline;
       updateItemsMutation.mutate({
-        itemIds: selectedItemsIds,
+        itemIds: selectedItems,
         update,
       });
     }
@@ -196,7 +196,7 @@ const Item = ({
     inputRef.current.value = '';
   }
 
-  const selected = selectedItemsIds.filter((id) => id === item.id).length > 0;
+  const selected = selectedItems.filter((id) => id === item.id).length > 0;
 
   return (
     <Wrapper
@@ -225,7 +225,7 @@ const Item = ({
         <ItemAmount
           type="text"
           onBlur={setItemAmount}
-          disabled={Boolean(selectedItemsIds.length)}
+          disabled={Boolean(selectedItems.length)}
           placeholder={item.amount.toString()}
           belowAmountNeeded={item.amount < item.amountNeeded}
           ref={inputRef}
@@ -233,7 +233,7 @@ const Item = ({
         <ItemAmountNeeded
           type="text"
           onBlur={setItemAmountNeeded}
-          disabled={Boolean(selectedItemsIds.length)}
+          disabled={Boolean(selectedItems.length)}
           placeholder={item.amountNeeded.toString()}
           ref={inputRef}
         />
