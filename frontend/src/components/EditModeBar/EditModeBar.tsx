@@ -31,6 +31,7 @@ const Wrapper = styled.div`
 const LeftSideBar = styled.div`
   display: flex;
   gap: 1rem;
+  align-items: center;
 `;
 
 const RightSideBar = styled.div`
@@ -55,18 +56,18 @@ const EditIcon = styled.img<{ flip?: boolean }>`
 `;
 
 const EditModeBar = ({
-  selectedItemsIds,
-  setSelectedItemsIds,
+  selectedItems,
+  setSelectedItems,
   removeSelectedItems,
 }: {
-  selectedItemsIds: string[];
-  setSelectedItemsIds: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedItems: string[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<string[]>>;
   removeSelectedItems: () => void;
 }): JSX.Element => {
   const { i18n } = useTranslation();
 
   const deselectAll = () => {
-    setSelectedItemsIds([]);
+    setSelectedItems([]);
   };
 
   return (
@@ -78,10 +79,11 @@ const EditModeBar = ({
             src={ArrowBackSvg}
             onClick={deselectAll}
           />
+            {selectedItems.length}
         </LeftSideBar>
         <RightSideBar>
           {/* Rendering the edit button only if a single item is selected */}
-          {selectedItemsIds.length === 1 ? <EditIcon src={EditSvg} /> : null}
+          {selectedItems.length === 1 ? <EditIcon src={EditSvg} /> : null}
           <EditIcon src={TrashCanSvg} onClick={removeSelectedItems} />
         </RightSideBar>
       </div>
