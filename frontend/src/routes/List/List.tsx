@@ -17,33 +17,33 @@ const List = () => {
 
   const {deleteItemMutation} = useItemsMutations();
 
-  const [selectedItemsIds, setSelectedItemsIds] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const onItemClick = (e: React.TouchEvent<HTMLElement>, item: ItemI) => {
-    if (selectedItemsIds.find((id) => id === item.id)) {
+    if (selectedItems.find((id) => id === item.id)) {
       if ((e.target as HTMLTextAreaElement).tagName === 'BUTTON') return;
-      setSelectedItemsIds(selectedItemsIds.filter((id) => id !== item.id));
+      setSelectedItems(selectedItems.filter((id) => id !== item.id));
       return;
     }
-    setSelectedItemsIds((prev) => [...prev, item.id]);
+    setSelectedItems((prev) => [...prev, item.id]);
   };
 
   const removeSelectedItems = () => {
-    selectedItemsIds.forEach(id => deleteItemMutation.mutate({id}));
+    selectedItems.forEach(id => deleteItemMutation.mutate({id}));
   };
 
   return (
     <Wrapper className="list">
       {/* rendering the edit bar if items have been selected */}
-      {selectedItemsIds.length ? <EditModeBar {...{selectedItemsIds, setSelectedItemsIds, removeSelectedItems}} /> : null}
+      {selectedItems.length ? <EditModeBar {...{selectedItems, setSelectedItems, removeSelectedItems}} /> : null}
       {stockList?.map((item, i) => (
         <Item
           key={i}
           item={item}
           onItemClick={onItemClick}
-          selectedItemsIds={selectedItemsIds}
+          selectedItems={selectedItems}
         />
       ))}
-      {selectedItemsIds.length <= 0 && (
+      {selectedItems.length <= 0 && (
         <AddItem />
       )}
     </Wrapper>
