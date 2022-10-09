@@ -25,8 +25,8 @@ const addItem = async (req: Request, res: Response, next: NextFunction) => {
 const updateItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.itemId as string;
-    const item = req.body as Item;
-    await itemService.updateItem(id, item);
+    const update = req.body.update as UpdateWithAggregationPipeline;
+    await itemService.updateItem(id, update);
     res.status(204).end();
   } catch (err) {
     next(err);

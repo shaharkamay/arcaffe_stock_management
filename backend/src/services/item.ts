@@ -12,19 +12,28 @@ const addItem = async (item: Item) => {
   return newItem;
 };
 
-const updateItem = async (itemId: string, item: Item) => {
-  const updatedItem = await ItemModel.findByIdAndUpdate(itemId, item);
+const updateItem = async (
+  itemId: string,
+  update: UpdateWithAggregationPipeline
+) => {
+  const updatedItem = await ItemModel.updateOne({ _id: itemId }, update);
   return updatedItem;
-}
+};
 
-const updateItems = async (itemIds: string[], update: UpdateWithAggregationPipeline) => {
-  const updatedItems = await ItemModel.updateMany({_id: { $in: itemIds }}, update);
+const updateItems = async (
+  itemIds: string[],
+  update: UpdateWithAggregationPipeline
+) => {
+  const updatedItems = await ItemModel.updateMany(
+    { _id: { $in: itemIds } },
+    update
+  );
   return updatedItems.modifiedCount;
-}
+};
 
 const deleteItem = async (itemId: string) => {
   await ItemModel.findByIdAndDelete(itemId);
-}
+};
 
 export default {
   addItem,

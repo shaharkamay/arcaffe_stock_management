@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { Header } from './components';
@@ -51,12 +51,15 @@ const App = (): JSX.Element => {
     localStorage.getItem('theme') || 'theme-auto'
   );
 
+  useEffect(() => {
+    document.querySelector(':root')?.setAttribute('lang', lang);
+  }, [lang]);
+
   return (
     <Theme.Provider value={{ theme, setTheme }}>
       <QueryClientProvider client={queryClient}>
         <div
           className={`app ${theme}`}
-          lang={lang}
           dir={lang === 'he' ? 'rtl' : 'ltr'}
         >
           <RouterProvider router={router} />

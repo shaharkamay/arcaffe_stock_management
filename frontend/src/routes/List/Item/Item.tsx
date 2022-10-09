@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '../../../components';
 import { ItemI } from '../../../@types';
 import { useLongPress } from '../../../hooks';
@@ -104,14 +104,16 @@ const Item = ({
   item,
   onItemClick,
   selectedItems,
+  alterItemAmounts,
+  isSelectedAmountLoading,
 }: {
   item: ItemI;
   onItemClick: (e: React.TouchEvent<HTMLElement>, item: ItemI) => void;
   selectedItems: string[];
+  alterItemAmounts: (amount: number) => void;
+  isSelectedAmountLoading: boolean,
 }): JSX.Element => {
   const { updateItemMutation, updateItemsMutation } = useItemsMutations();
-
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const onLongPress = (e: React.TouchEvent<HTMLElement>) => {
     navigator?.vibrate?.(1);
@@ -159,14 +161,13 @@ const Item = ({
       if (id === item.id) doesExistInSelectedItems = true;
     });
 
-    if (!doesExistInSelectedItems)
-      updateItemMutation.mutate({ ...item, amount: item.amount + amount });
-    else {
-      const update = ({ $inc: { amount } }) as unknown as UpdateWithAggregationPipeline;
-      updateItemsMutation.mutate({
-        itemIds: selectedItems,
-        update,
-      });
+    const update = {
+      $inc: { amount },
+    } as unknown as UpdateWithAggregationPipeline;
+    if (!doesExistInSelectedItems) {
+      updateItemMutation.mutate({ ...item, update });
+    } else {
+      alterItemAmounts(amount);
     }
   };
 
@@ -177,7 +178,8 @@ const Item = ({
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
 
-    updateItemMutation.mutate({ ...item, amount });
+    const update = { amount } as unknown as UpdateWithAggregationPipeline;
+    updateItemMutation.mutate({ ...item, update });
     (e.target as HTMLTextAreaElement).value = '';
   };
 
@@ -188,15 +190,23 @@ const Item = ({
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
 
-    updateItemMutation.mutate({ ...item, amountNeeded });
+    const update = { amountNeeded } as unknown as UpdateWithAggregationPipeline;
+
+    updateItemMutation.mutate({ ...item, update });
     (e.target as HTMLTextAreaElement).value = '';
   };
 
-  if (inputRef.current?.value) {
-    inputRef.current.value = '';
-  }
-
   const selected = selectedItems.filter((id) => id === item.id).length > 0;
+
+  const isAmountLoading =
+    (updateItemMutation.isLoading &&
+      ('$inc' in (updateItemMutation.variables?.update || {}) ||
+        'amount' in (updateItemMutation.variables?.update || {}))) ||
+    updateItemsMutation.isLoading;
+
+  const isAmountNeededLoading =
+    updateItemMutation.isLoading &&
+    'amountNeeded' in (updateItemMutation.variables?.update || {});
 
   return (
     <Wrapper
@@ -223,19 +233,19 @@ const Item = ({
       </ItemName>
       <AmountWrapper>
         <ItemAmount
+          className={isAmountLoading || isSelectedAmountLoading ? 'border-loading' : ''}
           type="text"
           onBlur={setItemAmount}
           disabled={Boolean(selectedItems.length)}
           placeholder={item.amount.toString()}
           belowAmountNeeded={item.amount < item.amountNeeded}
-          ref={inputRef}
         />
         <ItemAmountNeeded
+          className={isAmountNeededLoading ? 'border-loading' : ''}
           type="text"
           onBlur={setItemAmountNeeded}
           disabled={Boolean(selectedItems.length)}
           placeholder={item.amountNeeded.toString()}
-          ref={inputRef}
         />
       </AmountWrapper>
 
