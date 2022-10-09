@@ -159,10 +159,10 @@ const Item = ({
       if (id === item.id) doesExistInSelectedItems = true;
     });
 
-    if (!doesExistInSelectedItems)
-      updateItemMutation.mutate({ ...item, amount: item.amount + amount });
-    else {
-      const update = ({ $inc: { amount } }) as unknown as UpdateWithAggregationPipeline;
+    const update = ({ $inc: { amount } }) as unknown as UpdateWithAggregationPipeline;
+    if (!doesExistInSelectedItems) {
+      updateItemMutation.mutate({ ...item, update });
+    } else {
       updateItemsMutation.mutate({
         itemIds: selectedItemsIds,
         update,
@@ -177,7 +177,8 @@ const Item = ({
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
 
-    updateItemMutation.mutate({ ...item, amount });
+    const update = { amount } as unknown as UpdateWithAggregationPipeline;
+    updateItemMutation.mutate({ ...item, update });
     (e.target as HTMLTextAreaElement).value = '';
   };
 
@@ -188,7 +189,9 @@ const Item = ({
         ? 0
         : Number((e.target as HTMLTextAreaElement).value);
 
-    updateItemMutation.mutate({ ...item, amountNeeded });
+    const update = { amountNeeded } as unknown as UpdateWithAggregationPipeline;
+
+    updateItemMutation.mutate({ ...item, update });
     (e.target as HTMLTextAreaElement).value = '';
   };
 
