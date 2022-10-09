@@ -54,6 +54,15 @@ const EditIcon = styled.img<{ flip?: boolean }>`
     `};
 `;
 
+const AmountSelected = styled.div`
+        width: 2.2rem;
+        height 2.2rem;
+        background: none;
+        border: 1px solid var(--clr-secondary);
+        border-radius: 0.6rem;
+        padding: 0.4rem;
+`;
+
 const EditModeBar = ({
   selectedItemsIds,
   setSelectedItemsIds,
@@ -78,6 +87,9 @@ const EditModeBar = ({
             src={ArrowBackSvg}
             onClick={deselectAll}
           />
+          <AmountSelected>
+                    {selectedItems.length}
+                </AmountSelected>
         </LeftSideBar>
         <RightSideBar>
           {/* Rendering the edit button only if a single item is selected */}
