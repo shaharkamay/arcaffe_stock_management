@@ -1,13 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import { getLocalStockList } from '../../utils';
+import { ItemI } from '../../@types';
+import { useItemsQuery } from '../List/queries';
 
 const Wrapper = styled.div.attrs(() => ({ className: 'container' }))`
   padding: 1rem 0;
 `;
 
 const Table = styled.table`
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
   border: 1px solid var(--background);
@@ -31,6 +33,7 @@ const Th = styled.th`
 `;
 
 const Td = styled.td`
+  word-break: break-word;
   padding: 0.2rem 0.5rem;
   color: var(--foreground-secondary);
   border: 1px solid var(--background);
@@ -39,7 +42,10 @@ const Td = styled.td`
 const Summary = () => {
   const { t } = useTranslation();
 
-  const stockList = getLocalStockList();
+  const { data } = useItemsQuery();
+
+  const stockList = (data?.data || []) as ItemI[];
+
   return (
     <Wrapper>
       <Table>
