@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../../components';
+import { Button, Tippy } from '../../../components';
 import { ItemI } from '../../../@types';
 import { useLongPress } from '../../../hooks';
 import styled, { css } from 'styled-components';
@@ -36,15 +36,21 @@ const Wrapper = styled.div<{ selected: boolean }>`
     `};
 `;
 
-const ItemName = styled.span`
-  width: 100%;
+const ItemName = styled.div`
+  min-width: 0;
+  flex: 1;
   text-align: start;
   user-select: none;
   font-size: 1rem;
-  word-break: break-all;
   display: flex;
   gap: 0.5rem;
   align-items: center;
+
+  > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 const Check = styled.img`
@@ -111,7 +117,7 @@ const Item = ({
   onItemClick: (e: React.TouchEvent<HTMLElement>, item: ItemI) => void;
   selectedItems: string[];
   alterItemAmounts: (amount: number) => void;
-  isSelectedAmountLoading: boolean,
+  isSelectedAmountLoading: boolean;
 }): JSX.Element => {
   const { updateItemMutation, updateItemsMutation } = useItemsMutations();
 
@@ -228,12 +234,16 @@ const Item = ({
         -
       </Button>
       <ItemName>
-        {item.name}
+        <Tippy content={item.name}>
+          <span>{item.name}</span>
+        </Tippy>
         {selected && <Check src={checkMarkSvg} />}
       </ItemName>
       <AmountWrapper>
         <ItemAmount
-          className={isAmountLoading || isSelectedAmountLoading ? 'border-loading' : ''}
+          className={
+            isAmountLoading || isSelectedAmountLoading ? 'border-loading' : ''
+          }
           type="text"
           onBlur={setItemAmount}
           disabled={Boolean(selectedItems.length)}

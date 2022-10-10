@@ -30,6 +30,28 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/arcaffe_stock_management',
+    element: (
+      <>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </>
+    ),
+    children: [
+      {
+        index: true,
+        element: <List />,
+      },
+      {
+        path: '/arcaffe_stock_management/summary',
+        element: <Summary />,
+      },
+    ],
+  },
 ]);
 
 const queryClient = new QueryClient();

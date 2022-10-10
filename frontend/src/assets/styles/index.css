@@ -48,8 +48,6 @@
     --clr-quaternary: var(--clr-brown-lighter);
     --clr-quinary: var(--clr-sky);
     --clr-quinary-alternate: var(--clr-sky-lighter);
-    --link-clr: #0000ee;
-    --visited-clr: #551a8b;
     --link-clr: #8ab4f8;
     --visited-clr: #c58af9;
     --inverted: invert(1) hue-rotate(180deg);
@@ -67,8 +65,6 @@
   --clr-quaternary: var(--clr-brown-lighter);
   --clr-quinary: var(--clr-sky);
   --clr-quinary-alternate: var(--clr-sky-lighter);
-  --link-clr: #0000ee;
-  --visited-clr: #551a8b;
   --link-clr: #8ab4f8;
   --visited-clr: #c58af9;
   --inverted: invert(1) hue-rotate(180deg);
