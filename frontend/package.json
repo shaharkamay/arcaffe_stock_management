@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://meandean17.github.io/arcaffe_stock_management",
   "dependencies": {
     "@lukemorales/query-key-factory": "^0.6.1",
     "@tanstack/react-query": "^4.10.1",
