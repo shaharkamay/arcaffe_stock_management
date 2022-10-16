@@ -3,3 +3,4 @@ export { default as SelectList } from './SelectList/SelectList';
 export { default as Header } from './header/Header';
 export { default as footer } from './footer/Footer';
 export { default as Tippy } from './Tippy/Tippy';
+export { default as Ripple } from './Ripple/Ripple';

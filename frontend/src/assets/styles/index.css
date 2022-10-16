@@ -113,6 +113,10 @@ a {
   color: var(--link-clr);
 }
 
+button {
+  cursor: pointer;
+}
+
 input,
 textarea,
 button,
