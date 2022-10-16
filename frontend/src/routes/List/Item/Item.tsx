@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tippy } from '../../../components';
+import { Button, Ripple, Tippy } from '../../../components';
 import { ItemI } from '../../../@types';
 import { useLongPress } from '../../../hooks';
 import styled, { css } from 'styled-components';
@@ -8,6 +8,8 @@ import { useItemsMutations } from '../queries';
 import { UpdateWithAggregationPipeline } from 'mongoose';
 
 const Wrapper = styled.div<{ selected: boolean }>`
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   padding: 0.7rem;
@@ -16,7 +18,6 @@ const Wrapper = styled.div<{ selected: boolean }>`
   background-color: var(--background-secondary);
   position: relative;
   box-sizing: border-box;
-  cursor: move;
   color: var(--foreground);
 
   &::after {
@@ -267,6 +268,7 @@ const Item = ({
       >
         +
       </Button>
+      <Ripple color="var(--clr-quaternary)" />
     </Wrapper>
   );
 };

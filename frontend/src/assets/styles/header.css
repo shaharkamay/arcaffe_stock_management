@@ -80,6 +80,8 @@ header {
   border-radius: 0.6rem;
   padding: 0.4rem;
   display: flex;
+  position: relative;
+  overflow: hidden;
 }
 
 .theme-button-svg {

@@ -41,7 +41,8 @@ const AddItem = (): JSX.Element => {
 
   const [itemName, setItemName] = useState<string>('');
 
-  const addItemToList = () => {
+  const addItemToList = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (!itemName) return;
     addItemMutation.mutate({
       name: itemName,
