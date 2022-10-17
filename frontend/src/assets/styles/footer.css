@@ -51,8 +51,6 @@ footer {
     padding: 0.4rem;
     display: flex;
     align-self:center;
-    overflow: hidden;
-    position: relative;
 }
   
 .lng-button-text {
