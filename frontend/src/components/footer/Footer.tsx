@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../assets/styles/footer.css';
-import { Ripple } from '../';
 import Credit from './Credit';
 
 const Footer = (): JSX.Element => {
@@ -41,7 +40,6 @@ const Footer = (): JSX.Element => {
             }}
           >
             <span className="lng-button-text">EN</span>
-            <Ripple duration={400} />
           </button>
         ) : (
           <button
@@ -52,7 +50,6 @@ const Footer = (): JSX.Element => {
             }}
           >
             <span className="lng-button-text">HE</span>
-            <Ripple duration={400} />
           </button>
         )}
       </div>

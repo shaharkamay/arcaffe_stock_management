@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Ripple } from '../';
 
 const StyledButton = styled.button`
-  overflow: hidden;
-  position: relative;
   border: none;
   border-radius: 999px;
   background-color: var(--background);
@@ -12,7 +9,6 @@ const StyledButton = styled.button`
   height: 3rem;
   aspect-ratio: 1 / 1;
   color: var(--foreground);
-  cursor: pointer;
 
   &:active {
     background-color: var(--background-secondary);
@@ -48,7 +44,6 @@ const Button = ({
       {...restProps}
     >
       {children}
-      <Ripple />
     </StyledButton>
   );
 };
